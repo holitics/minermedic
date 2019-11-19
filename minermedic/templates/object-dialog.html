@@ -1,0 +1,134 @@
+
+<script>
+	
+	// create a "global" object details dictionary for later use
+	var object_details = {};
+	object_details['name'] = '{{object_name}}';
+	object_details['model'] = '{{object_model}}';
+	object_details['id'] = {{object_id}};
+	object_details['power_state'] = {{power_state}};
+	object_details['powered_object'] = {{powered_object}};
+	object_details['is_power_device'] = {{power_device}};
+	object_details['ip'] = '{{object_ip}}';
+	object_details['mac'] = '{{object_mac}}';
+
+</script>
+
+<!-- This is the default "Object Dialog" template -->
+
+	<canvas class='object_dialog_header_canvas' id='object_dialog_header_canvas_{{object_id}}'/>
+	
+	<div class="row" id="object_dialog_header">
+		<div class="col-lg">
+			<img width="88" height="88" src="{{img_src}}" align="left"/>
+			<div class="col-xs-8">
+		
+				<h4>
+					{{object_name}}<br>
+					<small>{{object_type_description}}</small>
+				</h4>
+
+				<h5>
+				{%- if object_ip != None and object_name != object_ip %}
+					<small>IP-ADDRESS: {{object_ip}}</small><br/>
+				{%- endif %}
+			
+				{%- if object_mac != None and object_name != object_mac %}
+					<small>MAC-ADDRESS: {{object_mac}}</small><br/>
+				{%- endif %}
+			
+				</h5>
+		
+			</div>
+		</div>
+	</div>
+	
+	
+	{%- if show_details == 1 
+		and object_health != None
+		and object_health != 0 
+		and object_error != None
+	%}
+	
+	<div class="row" id="object_dialog_details">
+	
+		<div class="col-lg">
+		
+			<HR>
+					
+			<div class="col-xs-8">
+			
+				<h5>
+
+				{%- if object_health != None and object_health != 0 %}
+					<small>Health Score: {{object_health}}</small><br/>
+				{%- endif %}
+
+				{%- if object_error != None and object_error != '' %}
+					<small>Last Error: {{object_error}}</small><br/>
+				{%- endif %}
+				
+				</h5>
+			
+			</div>
+		</div>
+	</div>
+		
+	{%- endif %}
+		
+	{%- if header_only == 0 %}
+	
+	<script src="static/lib/js/holitics-modal-dialog.js"></script>
+	<script src="static/lib/js/holitics-object-dialog.js"></script>
+	<script src="static/lib/js/holitics-object-dialog-relations.js"></script>
+	<script src="static/lib/js/holitics-object-dialog-actions.js"></script>
+	<script src="static/lib/js/holitics-object-dialog-properties.js"></script>
+
+	<div class="row line_separator" id="object_dialog_buttons">
+	
+		<div class="col-lg">
+	
+			<div id="obj_info_toggles" style="align:center;">
+
+				{% include "holitics-object-dialog-toolbar.html" %}
+									
+				<div class="accordion-group">
+					<div class="collapse" id="obj_properties_{{object_id}}">
+					</div>
+					<div class="collapse" id="obj_relations_{{object_id}}">
+					</div>
+					<div class="collapse" id="obj_actions_{{object_id}}">
+					</div>
+				</div>
+
+			</div>
+											
+		</div>
+		
+	</div>
+
+	{%- endif %}
+
+
+<!-- load some templates for dynamic dialogs -->
+
+<script id="relation_dialog_add_power_template" type="text/template">
+	{% include "holitics-relation-dialog-add-power-source.html" %}
+</script>
+
+<script id="relation_dialog_add_new" type="text/template">
+	{% include "holitics-relation-dialog-add-new.html" %}
+</script>
+
+
+<!-- execute some functions once the document is ready -->
+
+<script>
+
+$(document).ready(function() {
+	{%- if powered_object == 1 %}
+		draw_canvas_icons({{power_state}},{{object_id}});
+	{%- endif %}
+});
+
+</script>

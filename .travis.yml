@@ -1,0 +1,30 @@
+language: python
+
+python:
+  - "3.7.3"
+
+notifications:
+  slack: holitics:zHZjtXn30GzFfVSABzDnzTLw
+  
+jobs:
+  include:
+
+    - stage: "Test"
+      name: "Unit Tests"
+      script: bash run_tests.sh
+
+    - stage: "Package"
+      name: "Package APP"
+      script: bash make_package.sh
+
+#    - stage: "Docs"                 # naming the DOCs stage
+#      name: "Build PyDocuments"     # names the first Tests stage job
+#      script: bash make_docs.sh
+#      deploy:
+#        - provider: pages
+#          local_dir: docs/_build
+#          skip_cleanup: true
+#          github_token: $GH_TOKEN          # Set in travis-ci.org dashboard
+#          on:
+#            branch: master
+

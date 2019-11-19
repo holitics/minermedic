@@ -1,0 +1,30 @@
+
+<!-- This is slide "6" -->
+
+{% extends "layout.html" %}
+{% block title %}Messages{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block carousel_indicator_6 %}active{% endblock %} 
+{% block carousel_item_6 %}active{% endblock %}
+{% block content6 %}
+
+  <h1 class="mt-3 text-light">Messages</h1>
+  <p class="important">
+	Messages from MinerMedic for the last cycle.
+
+<div id="vis" style="padding-top:20px">
+{%- with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+        {% endfor %}
+    {% else %}
+        <script>build_no_result();</script>
+    {% endif %}
+{%- endwith %}
+</div>
+	
+{% endblock %}

@@ -1,0 +1,5 @@
+routes = {
+  '/data/price?fsym=ETC&tsyms=USD' : {'USD': 4.88},
+  '/miner/:2da4e946c0ee6977bc44fbba9019b3931952cfff/worker/:holitics1/currentStats' : {"status":"OK","data":{"time":1553352000,"lastSeen":1553351963,"reportedHashrate":314146860,"currentHashrate":188888888.8888889,"validShares":170,"invalidShares":0,"staleShares":0,"averageHashrate":112500000}},
+  '/miner/:2da4e946c0ee6977bc44fbba9019b3931952cfff/currentStats': {"status":"OK","data":{"time":1553352000,"lastSeen":1553351963,"reportedHashrate":314146860,"currentHashrate":188888888.8888889,"validShares":170,"invalidShares":0,"staleShares":0,"averageHashrate":112500000,"activeWorkers":1,"unpaid":67943930585283656,"unconfirmed":"null","coinsPerMin":0.0002075227774157812,"usdPerMin":0.00101478638156317,"btcPerMin":2.5317778844725305e-7}}
+}

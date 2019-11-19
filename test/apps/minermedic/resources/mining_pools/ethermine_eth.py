@@ -1,0 +1,5 @@
+routes = {
+  '/data/price?fsym=ETH&tsyms=USD' : {'USD': 136.78},
+  '/miner/:41daf079cdefa7800eab2e51748614f0d386b1ff/worker/:4814F8FF882B/currentStats' : {"status":"OK","data":{"time":1553348400,"lastSeen":1553348335,"reportedHashrate":0,"currentHashrate":35555555.55555555,"validShares":32,"invalidShares":1,"staleShares":0,"averageHashrate":22222222.22222222}},
+  '/miner/:41daf079cdefa7800eab2e51748614f0d386b1ff/currentStats': {"status":"OK","data":{"time":1553348400,"lastSeen":1553348335,"reportedHashrate":0,"currentHashrate":35555555.55555555,"validShares":32,"invalidShares":1,"staleShares":0,"averageHashrate":22222222.22222222,"activeWorkers":1,"unpaid":683263807733166,"unconfirmed":"null","coinsPerMin":0.000001334392993859839,"usdPerMin":0.00018282518408873654,"btcPerMin":4.572964789957669e-8}}
+}

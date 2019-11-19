@@ -1,0 +1,36 @@
+
+<!-- This is slide "5" -->
+
+{% extends "layout.html" %}
+{% block title %}Predictions{% endblock %}
+{% block head %}
+  {{ super() }}
+
+  	<link rel="stylesheet" media="all" href="static/lib/css/holitics-effects-1.0.css?v=1.0"/>
+
+{% endblock %}
+
+{% block carousel_indicator_5 %}active{% endblock %} 
+{% block carousel_item_5 %}active{% endblock %}
+{% block content5 %}
+
+  <h1 class="mt-3 text-light">Predictions</h1>
+  <p class="important">
+	Model Prediction Status
+
+  <div id="vis" style="display: block; margin:auto;"></div>
+
+{% endblock %}
+
+{% block body_footer_javascript %}
+
+	<script src="static/lib/js/d3-2.1.1/d3.min.js"></script>
+	<script src="static/lib/js/d3-2.1.1/d3.layout.min.js"></script>
+	<script src="static/lib/js/browser-detect.js?v=1.0"></script>
+	<script src="static/lib/js/holitics-predictions.js"></script>
+
+	<script>
+		displayPredictiveModelStats('CRYPTO_MINER');
+	</script>
+
+{% endblock %}

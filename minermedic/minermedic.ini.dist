@@ -1,0 +1,46 @@
+[MAIL]
+From: MinerMedic <noreply@any_domain.com>
+To: You <you@your_domain.com>
+Server: your_email_server.net
+Port: 465
+Login: username
+Password: password
+
+[MISC]
+cdn_base_url: https://s3.amazonaws.com/phenome-cdn/
+# pushbullet_api_key: YOUR_API_KEY
+ruuvitag_enabled: True
+reminder_notification_error_time_ms: 3600000
+reminder_notification_warning_time_ms: 14400000
+device_restart_delay_ms: 300000
+poller_wait_time_ms: 60000
+socket_timeout: 3
+device_disable_after_failed_powercycle: True
+device_wake_on_lan_timeout_ms: 120000
+object_init_time_ms: 180000
+notify_on_power_change: True
+
+[LOGFILE]
+max_megabytes: 5
+
+[WEB]
+Port: 8080
+
+[AUTH]
+username: admin
+password: phenome
+
+[POWER]
+cost_kwh: 0.20
+
+[MINER_API_PORTS]
+antminer_port: 4028
+claymore_port: 3333
+baikal_port: 4028
+avalon_port: 4028
+
+[DEVICE_INITIAL_THRESHOLDS]
+temp_warning: 82
+temp_error: 90
+fan_warning: 5900
+fan_error: 6000

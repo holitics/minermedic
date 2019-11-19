@@ -1,0 +1,48 @@
+
+<!-- This is slide "3" -->
+
+{% extends "layout.html" %}
+{% block title %}Hashrate{% endblock %}
+{% block head %}
+  {{ super() }}
+
+	<link rel="stylesheet" media="all" href="static/lib/css/holitics-asterplot-1.0.css?v=1.0"/>
+	<link rel="stylesheet" media="all" href="static/lib/css/holitics-effects-1.0.css?v=1.0"/>
+	
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+
+{% endblock %}
+
+{% block carousel_indicator_3 %}active{% endblock %} 
+{% block carousel_item_3 %}active{% endblock %}
+{% block content3 %}
+
+  <h1 class="mt-3 text-light">Hashrate</h1>
+  <p class="important">
+	Total hashrate of miners by Miner Type.
+	
+	<div id="vis" style="display: block; margin:auto;"></div>
+	
+	<script src="static/lib/js/holitics-asterplot.js" ></script>
+
+	<!-- populate the hashrate visual -->
+	<script>
+
+		d3.json('/hashrate_by_model', function(json) {
+
+			if (json == null || json.length == 0) {
+				build_no_result('',false);
+				return;
+			}
+
+			buildPlot(json);
+
+		});
+
+	</script>
+
+
+	
+{% endblock %}

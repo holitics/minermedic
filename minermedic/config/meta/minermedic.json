@@ -1,0 +1,637 @@
+{
+	"file_description": "MinerMedic configuration",
+  	"phenome_app_id": 1,
+	"phenome_app_name": "minermedic",
+    "phenome_app_title": "MinerMedic",
+    "phenome_app_version": "0.1.0",
+    "phenome_app_description": "The Crypto Miner Management Platform",
+	"phenome_app_classname": "minermedic.minermedic",
+	"phenome_developer_id": 0,
+  	"enums": {
+    	"enum": [
+    		{	"id": "_MODEL_CLASSTYPES_",
+          		"description": "Classtypes for MinerMedic devices.",
+				"values": [
+					{ "key": "CRYPTO_MINER", "value": "10001", "attributes": [{ "description": "Crypto-Currency Mining Device"}] },
+					{ "key": "CRYPTO_MINING_POOL", "value": "10002", "attributes": [{ "description": "Crypto-Currency Mining Pool", "add_dialog": "false"}] }
+				]
+       		},
+    		{	"id": "_MODEL_SUBCLASSTYPES_",
+          		"description": "SubClassTypes for all Object Models. EDITS CAN BREAK MODELS. ADDS ARE SAFE! For other applications, put custom models into custom json file starting at ID 1000000",
+				"values": [
+					{ "key": "ASIC_MINER", "value": "10001", "attributes": [{ "description": "CryptoMiner (ASIC)"}] },
+					{ "key": "GPU_MINER", "value": "10002", "attributes": [{ "description": "CryptoMiner (GPU)"}] },
+					{ "key": "FGPA_MINER", "value": "10003", "attributes": [{ "description": "CryptoMiner (FGPA)"}] },
+					{ "key": "CPU_MINER", "value": "10004", "attributes": [{ "description": "CryptoMiner (CPU)"}] }
+				]
+       		},
+    		{	"id": "_ALGOS_",
+          		"description": "Algorithms for Cryptocurrency Miners. First 100 reserved for SYNC with NiceHash. KEYS MUST BE lowercase.",
+				"values": [
+					{ "key": "scrypt", "value": "0" },
+					{ "key": "sha256", "value": "1" },
+					{ "key": "scryptnf", "value": "2" },
+					{ "key": "x11", "value": "3" },
+					{ "key": "x13", "value": "4" },
+					{ "key": "keccak", "value": "5" },
+					{ "key": "x15", "value": "6" },
+					{ "key": "nist5", "value": "7" },
+					{ "key": "neoscrypt", "value": "8" },
+					{ "key": "lyra2re", "value": "9" },
+					{ "key": "whirlpoolx", "value": "10" },
+					{ "key": "qubit", "value": "11" },
+					{ "key": "quark", "value": "12" },
+					{ "key": "axiom", "value": "13" },
+					{ "key": "lyra2rev2", "value": "14" },
+					{ "key": "scryptjanenf16", "value": "15" },
+					{ "key": "blake256r8", "value": "16" },
+					{ "key": "blake256r14", "value": "17" },
+					{ "key": "blake256r8vnl", "value": "18" },
+					{ "key": "hodl", "value": "19" },
+					{ "key": "daggerhashimoto", "value": "20" },
+					{ "key": "decred", "value": "21" },
+					{ "key": "cryptonight", "value": "22" },
+					{ "key": "lbry", "value": "23" },
+					{ "key": "equihash", "value": "24" },
+					{ "key": "pascal", "value": "25" },
+					{ "key": "x11gost", "value": "26" },
+					{ "key": "sia", "value": "27" },
+					{ "key": "blake2s", "value": "28" },
+					{ "key": "skunk", "value": "29" },
+					{ "key": "cryptonightv7", "value": "30" },
+					{ "key": "cryptonightheavy", "value": "31" },
+					{ "key": "lyra2z", "value": "32" },
+					{ "key": "x16r", "value": "33" },
+					{ "key": "cryptonightv8", "value": "34" },
+					{ "key": "sha256asicboost", "value": "35" },
+					{ "key": "zhash", "value": "36" },
+					{ "key": "beam", "value": "37" },
+					{ "key": "grincuckaroo29", "value": "38" },
+					{ "key": "grincuckaroo31", "value": "39" },
+					{ "key": "lyra2rev3", "value": "40" },
+					{ "key": "mtp", "value": "41" },
+					{ "key": "cryptonightr", "value": "42" },
+					{ "key": "myriadgroestl", "value": "100"},
+					{ "key": "myriadcoingroestl", "value": "101"}
+				]
+       		},
+			{	"id": "_POOL_STATS_CLASSNAMES_",
+          		"description": "IDs, classnames for Pool Stats.",
+				"values": [
+					{ "key": "nicehash", "value": "1", "attributes": [{ "description": "NiceHash Mining Pool", "url_match": "(.*).(.*).nicehash.com", "classname": "minermedic.pools.nicehash.NiceHashPool"}] },
+					{ "key": "ethermineETH", "value": "2" , "attributes": [{ "description": "Ethereum Mining Pool", "url_match": "((us[1-9])|(asia[1-9])|(eu[1-9])).ethermine.org", "classname": "minermedic.pools.ethermine.EtherminePool"}] },
+					{ "key": "ethermineETC", "value": "3" , "attributes": [{ "description": "Ethereum Classic Mining Pool", "url_match": "(.*)-(etc.ethermine.org)", "classname": "minermedic.pools.ethermine_etc.EthermineETCPool"}] },
+					{ "key": "miningpoolhub", "value": "4" , "attributes": [{ "description": "Mining Pool Hub", "url_match": "(.*)(miningpoolhub.com)", "classname": "minermedic.pools.mpos.MPOS"}] }
+				]
+       		},
+    		{	"id": "_COINS_",
+				"cache_definition": "True",
+          		"description": "CryptoCoins",
+				"api_url_alt": "https://min-api.cryptocompare.com/data/all/coinlist",
+				"api_url": "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=100&tsym=USD",
+				"api_json_root_node": "Data",
+				"values_alt": [
+					{ "key": "{Name}", "value": "{Id}", "attributes": "{CoinName},{Symbol},{ImageUrl},{Id}"}
+				],
+				"values": [
+					{ "key": "{CoinInfo/Name}", "value": "{CoinInfo/Id}", "attributes": "{CoinName=CoinInfo/FullName},{Symbol=CoinInfo/Internal},{ImageUrl=CoinInfo/ImageUrl},{Id=CoinInfo/Id}"}
+				]
+       		},
+    		{	"id": "_RELATION_TYPES_",
+				"description": "Relation Types for MinerMedic devices.",
+				"values": [
+					{ "key": "MINING_ON", 	"value": "10001", "attributes": [{ "description": "Mining on this pool", "dependency": "true"}] }
+				]
+       		},
+    		{	"id": "_UNIT_TYPES_",
+          		"description": "Unit Types for MinerMedic devices and properties",
+				"values": [
+					{ "key": "kilohash_per_sec", "value": "10001", "attributes": [{ "description": "KiloHashes Per Second", "numeric":"True", "symbol":"KH/s"}] },
+					{ "key": "megahash_per_sec", "value": "10002", "attributes": [{ "description": "MegaHashes Per Second", "numeric":"True", "symbol":"MH/s"}] },
+					{ "key": "gigahash_per_sec", "value": "10003", "attributes": [{ "description": "GigaHashes Per Second", "numeric":"True", "symbol":"GH/s"}] },
+					{ "key": "terahash_per_sec", "value": "10004", "attributes": [{ "description": "TeraHashes Per Second", "numeric":"True", "symbol":"TH/s"}] }
+				]
+       		}
+    	]
+	},
+	"object_models": {
+    	"object_model": [
+      	{
+			"id": "ROOT_MINER",
+        	"description": "All Miners",
+        	"model_classtype": "CRYPTO_MINER",
+        	"model_classname": "minermedic.miners.base_miner.BaseMiner",
+			"model_classname_poller": "MINER_POLLER",
+			"model_classname_results": "minermedic.miner_results.MinerResults",
+			"model_classname_processor": "minermedic.miner_processor.MinerProcessor",
+        	"phenome": {
+				"property_model": [
+					{ "name": "_ipaddress", "description": "IP Address", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "a.b.c.d", "attributes": [{ "show_in_ui": "true", "required": 1, "add_only":"true", "units":"ipaddress"}]},
+					{ "name": "username", "description": "Username", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "", "attributes": [{ "show_in_ui": "true", "required": 0, "add_only":"false", "ui_group":"authentication"}]},
+					{ "name": "password", "description": "Password", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "", "attributes": [{ "show_in_ui": "true", "required": 0, "add_only":"false", "ui_group":"authentication"}]},
+					{ "name": "chips", "description": "Boards and Chip counts of the Miner", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "" },
+					{ "name": "hashrate", "description": "Configurable expected hashrate of the Miner based on algo, power, units, etc. Do not persist per object.", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "", "model_only": "1" },
+					{ "name": "coin_address", "description": "The address of the currently mined coin", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "", "attributes": [{ "show_in_ui": "true"}]},
+					{ "name": "worker_name", "description": "The worker name of the miner", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "" },
+					{ "name": "temp_warning", "description": "Warning level for Temperature of Chips", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "80", "attributes": [{ "show_in_ui": "true", "ui_group":"thresholds"}]},
+					{ "name": "temp_error", "description": "Error level for Temperature of Chips", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "90", "attributes": [{ "show_in_ui": "true", "ui_group":"thresholds"}]},
+					{ "name": "temp_error_pcb", "description": "Error level for Temperature of PCB", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "85", "attributes": [{ "show_in_ui": "true", "ui_group":"thresholds"}]},
+					{ "name": "fan_warning", "description": "Warning level for Fan (rpm)", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "5900", "attributes": [{ "show_in_ui": "true", "ui_group":"thresholds"}]},
+					{ "name": "fan_error", "description": "Error level for Fan (rpm)", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "6000", "attributes": [{ "show_in_ui": "true", "ui_group":"thresholds"}]},
+					{ "name": "ui_port", "description": "UI (HTTP) Port of Miner", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "80", "attributes": [{ "show_in_ui": "true"}]},
+					{ "name": "api_port", "description": "API Port of Miner", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "4028", "attributes": [{ "show_in_ui": "true"}]},
+					{ "name": "api_timeout", "description": "API Socket Timeout (seconds)", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "3", "attributes": [{ "show_in_ui": "true"}]},
+					{ "name": "restart_delay", "description": "The amount of time to wait between restarts or reboots (milliseconds)", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "300000", "attributes": [{ "show_in_ui": "true"}]},
+					{ "name": "last_restart_time", "description": "Last time the miner was restarted (time/milliseconds)", "property_type": "STATE", "value_type": "INTEGER", "default": "0", "model_only": "0" },
+					{ "name": "last_reboot_time", "description": "Last time the miner was rebooted (time/milliseconds)", "property_type": "STATE", "value_type": "INTEGER", "default": "0", "model_only": "0" },
+					{ "name": "last_wol_time", "description": "Last time the miner was sent a WOL packet (time/milliseconds)", "property_type": "STATE", "value_type": "INTEGER", "default": "0", "model_only": "0" },
+					{ "name": "profitable", "description": "Flag for whether the miner is profitable (1==YES, 0==NO).", "property_type": "STATE", "value_type": "INTEGER", "default": "1", "model_only": "0" },
+					{ "name": "last_profitcheck_time", "description": "Last time the miner was checked for profitability (time/milliseconds)", "property_type": "STATE", "value_type": "INTEGER", "default": "0", "model_only": "0" },
+					{ "name": "next_profitcheck_time", "description": "Next time the miner will be checked for profitability (time/milliseconds)", "property_type": "STATE", "value_type": "INTEGER", "default": "0", "model_only": "0" },
+					{ "name": "idle_cycles_count", "description": "The current count of idle cycles (no work from pool)", "property_type": "STATE", "value_type": "INTEGER", "default": "0", "model_only": "0" },
+					{ "name": "check_temps", 		"description": "Checks temperatures", 	 "property_type": "ACTION", "value_type": "TEXT", "default": "", "model_only": "1", "attributes": [{ "action": "check_temps"}]},
+					{ "name": "check_chips", 		"description": "Checks chips", 			 "property_type": "ACTION", "value_type": "TEXT", "default": "", "model_only": "1", "attributes": [{ "action": "check_chips"}]},
+					{ "name": "check_hashrate", 	"description": "Checks miner hashrate",  "property_type": "ACTION", "value_type": "TEXT", "default": "", "model_only": "1", "attributes": [{ "action": "check_hashrate"}]},
+					{ "name": "check_ui", 			"description": "Checks miner UI", 		 "property_type": "ACTION", "value_type": "TEXT", "default": "", "model_only": "1", "attributes": [{ "action": "check_ui"}]},
+					{ "name": "check_fans",  		"description": "Checks fan speeds", 	 "property_type": "ACTION", "value_type": "TEXT", "default": "", "model_only": "1", "attributes": [{ "action": "check_fans"}]},
+					{ "name": "check_profit",		"description": "Checks miner profit",	 "property_type": "ACTION", "value_type": "TEXT", "default": "", "model_only": "1", "attributes": [{ "action": "check_profit"}]},
+					{ "name": "check_idle",			"description": "Checks if miner is idle", "property_type": "ACTION", "value_type": "TEXT", "default": "", "model_only": "1", "attributes": [{ "action": "check_idle"}]}
+	        	],
+				"data_model": [
+					{ "name": "health", "description": "healthscore", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "int64", "units": "healthscore", "aggr": "mean"}]},
+					{ "name": "temperature", "description": "temperature", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "float64", "units": "celcius", "aggr": "mean"}]},
+					{ "name": "fan_status", "description": "percentage of healty fans", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "bool", "units": "boolean", "aggr": "mean"}]},
+					{ "name": "chip_status", "description": "percentage of healthy chips", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "int64", "units": "percent", "aggr": "mean"}]},
+					{ "name": "hashrate", "description": "current hashrate", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "int64", "units": "MH/s", "aggr": "mean"}]},
+					{ "name": "worker", "description": "current worker name in pool", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "object", "units": "", "aggr": "none"}]},
+					{ "name": "pool", "description": "current pool index", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "int64", "units": "{ENUM._POOL_STATS_CLASSNAMES_}", "aggr": "none"}]},
+					{ "name": "algo", "description": "current algo on device", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "int64", "units": "{ENUM._ALGOS_}", "aggr": "none"}]},
+					{ "name": "power_used", "description": "amount of power used", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "float64", "units": "watts", "aggr": "sum"}]},
+					{ "name": "power_used_cost", "description": "cost of power", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "float64", "units": "{app.config['CURRENCY']}", "aggr": "sum"}]},
+					{ "name": "coin", "description": "coin", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "int64", "units": "{ENUM._COINS_}", "aggr": "mean"}]},
+					{ "name": "coin_cost", "description": "coin cost", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "float64", "units": "{app.config['CURRENCY']}", "aggr": "mean"}]},
+					{ "name": "coin_mined", "description": "amount of coin mined", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "float64", "units": "{coin}", "aggr": "sum"}]},
+					{ "name": "coin_purchase_cost", "description": "cost to purchase", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "float64", "units": "{app.config['CURRENCY']}", "aggr": "sum"}]},
+					{ "name": "profitability", "description": "profitability", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "float64", "units": "", "aggr": "mean"}]},
+					{ "name": "profitable", "description": "profitable", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "bool", "units": "boolean", "aggr": "mean"}]}
+				],
+				"action_model": [
+					{ "name": "powercycle", 		"description": "Power Cycle", 			 "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"powercycle", "show_in_ui": "true", "delay_secs": "30", "create_method": "True"}]},
+					{ "name": "restart",			"description": "Restart",				 "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"restart_miner", "show_in_ui": "true", "delay_secs": "30", "create_method": "True"}]},
+					{ "name": "wakeonlan", 			"description": "Wake On Lan", 			 "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"wake_on_lan", "show_in_ui": "true", "create_method": "True", "required_property":"_macaddress"}]},
+					{ "name": "check_chips", 		"description": "Checks chips", 			 "value_type": "TEXT", "default": "", "attributes": [
+							{ "classname": "minermedic.sensorchecks.chips.ChipCheck",
+								"methodname":"execute",
+								"error_level":"80%",
+								"warning_level":"90%",
+								"error_timestamp":"last_chip_error_time"}]},
+					{ "name": "check_gpus", 		"description": "Checks GPUs", 			 "value_type": "TEXT", "default": "", "attributes": [
+							{ "classname": "minermedic.sensorchecks.gpus.GPUCheck",
+								"methodname":"execute",
+								"error_timestamp":"last_chip_error_time"}]},
+					{ "name": "check_fans",  		"description": "Checks fan speeds", 	 "value_type": "TEXT", "default": "", "attributes": [
+							{ "classname": "phenome.extensions.sensorchecks.generic_sensorcheck.GenericCheck",
+								"methodname":"execute",
+								"input":"fan_speeds",
+								"error_behavior":"fan_error",
+								"error_state_key": "fan_error",
+								"error_level": "object.fan_error",
+								"warning_level": "object.fan_warning",
+								"error_healthscore": "5",
+								"warning_healthscore": "3",
+								"has_error":"(error_level is not None) and (_result_avg > error_level) and (error_level > 0)",
+								"has_error_alt":"_result_min == 0 and warning_level > 0",
+								"has_warning":"(warning_level is not None) and (_result_avg > warning_level) and (warning_level > 0)",
+								"warn_behavior":"fan_warning",
+								"error_timestamp":"last_fan_error_time",
+								"error_message":"'High fan speeds ({}>{})'.format(_result_avg, error_level)",
+								"error_message_alt":"'Possible broken Fan'",
+								"warning_message":"'Elevated fan speeds ({}>{})'.format(_result_avg, warning_level)",
+								"behavior_on_error":"poweroff",
+								"behavior_on_warning":"_notify"}]},
+					{ "name": "check_temps", 		"description": "Checks temperatures", 	 "value_type": "TEXT", "default": "", "attributes": [
+							{ 	"classname": "phenome.extensions.sensorchecks.generic_sensorcheck.GenericCheck",
+								"methodname":"execute",
+								"input":"temperature",
+								"use_avg":"true",
+								"error_state_key": "temp_error",
+								"error_level": "object.temp_error",
+								"warning_level": "object.temp_warning",
+								"error_healthscore": "5",
+								"warning_healthscore": "3",
+								"has_error":"error_level is not None and error_level > 0 and _result_avg > error_level",
+								"has_warning":"warning_level is not None and warning_level > 0 and _result_avg > warning_level",
+								"error_timestamp":"last_temp_error_time",
+								"error_message":"'High temperatures ({}>{})'.format(_result_avg, object.temp_error)",
+								"warning_message":"'Elevated temperatures ({}>{})'.format(_result_avg, object.temp_warning)",
+								"behavior_on_error":"powercycle",
+								"behavior_on_warning":"_notify"}]},
+					{ "name": "check_hashrate", 	"description": "Checks miner hashrate",  "value_type": "TEXT", "default": "", "attributes": [
+							{ "classname": "minermedic.sensorchecks.hashrate.HashCheck",
+								"methodname":"execute",
+								"error_level":"80%",
+								"warning_level":"90%",
+								"error_timestamp":"last_hashrate_error_time",
+								"behavior_on_error":"restart",
+								"behavior_on_warning":"_notify"}]},
+					{ "name": "check_idle", 	"description": "Checks if miner is idle or busy",  "value_type": "TEXT", "default": "", "attributes": [
+							{ "classname": "phenome.extensions.sensorchecks.generic_sensorcheck.GenericCheck",
+								"methodname":"execute",
+								"input":"object.idle_cycles_count",
+								"error_level": "20",
+								"warning_level": "15",
+								"error_healthscore": "7",
+								"warning_healthscore": "3",
+								"has_error":"error_level is not None and error_level > 0 and _result >= error_level",
+								"has_warning":"warning_level is not None and warning_level > 0 and _result >= warning_level",
+								"error_message":"'Miner IDLE for too many cycles ({}>{})'.format(_result, error_level)",
+								"warning_message":"'Miner IDLE for several cycles ({}>{})'.format(_result, warning_level)",
+								"error_timestamp":"last_idle_error_time",
+								"behavior_on_error":"restart",
+								"behavior_on_warning":"_notify"}]},
+					{ "name": "check_ui", 			"description": "Checks miner UI",		"value_type": "TEXT", "default": "", "attributes": [{ "classname": "minermedic.sensorchecks.ui.UICheck"}]},
+					{ "name": "check_profit",		"description": "Checks miner profit",	"value_type": "TEXT", "default": "", "attributes": [
+							{ "classname": "minermedic.sensorchecks.profitability.ProfitCheck",
+								"powerdown_when_not_profitable": "false",
+								"powerup_when_profitable": "true",
+								"recheck_delay": "3600000",
+								"sample_count": "5",
+								"profit_target": "1.1",
+								"healthscore": "5",
+								"notify_on_change": "true"}]}
+				],
+				"relation_model": [
+					{ "name": "power_dependency", "description": "dependency on another object's powered state", "value_type": "TEXT", "default": "", "attributes": [
+						{ 	"classname": "phenome.extensions.dependencychecks.generic_dependencycheck.GenericDependencyCheck",
+							"relation_type": "DEPENDS_ON",
+							"relation_hasattr": "power_state",
+							"related_model":"ANY",
+							"repeat_delay_secs": "120",
+							"enabled": "false",
+							"notify": "true",
+							"test_for_state_1": "relation.power_state==1 and object.power_state==2",
+							"test_for_state_2": "relation.power_state==2 and object.power_state==1",
+							"behavior_on_state_1": "object.set_enabled(False)",
+							"behavior_on_state_2": "object.power_on(self.message)",
+							"message_on_state_1": "'Disabling ({}) due to ({}) being powered OFF'.format(object.unique_id,relation.unique_id)",
+							"message_on_state_2": "'Powering ON ({}) due to ({}) being powered ON'.format(object.unique_id,relation.unique_id)",
+							"state_1_is_error": "true",
+							"state_2_is_error": "false"
+						}
+					]},
+					{ "name": "temp_sensor_dependency", "description": "dependency on another object's temperature sensor values", "value_type": "TEXT", "default": "", "attributes": [
+						{ 	"classname": "phenome.extensions.dependencychecks.generic_dependencycheck.GenericDependencyCheck",
+							"relation_type": "REMOTE_SENSOR",
+							"relation_hasattr": "temperature",
+							"related_model":"ANY",
+							"repeat_delay_secs": "120",
+							"enabled": "true",
+							"notify": "true",
+							"test_for_state_1": "relation.temperature > object.temp_error and object.power_state == 2",
+							"test_for_state_2": "relation.temperature < object.temp_warning and object.power_state != 2",
+							"behavior_on_state_1": "object.power_off()",
+							"behavior_on_state_2": "object.power_on()",
+							"message_on_state_1": "'Powering OFF ({}) due to high temperature ({}) reported by ({})'.format(object.unique_id,relation.temperature,relation.unique_id)",
+							"message_on_state_2": "'Powering ON ({}) due to lower temperature ({}) reported by ({})'.format(object.unique_id,relation.temperature,relation.unique_id)",
+							"state_1_is_error": "true",
+							"state_2_is_error": "false"
+						}
+					]}
+				],
+				"thought_model": [
+					{
+						"name": "profitability",
+						"description": "predict future profitability",
+						"attributes": [
+							{
+								"algo": "AUTO",
+								"data_model": [{"data_in": "profitability,hashrate,algo,pool,power_used,coin_cost", "data_out": "profitability"}],
+								"period_minutes": [{"steps_in": 15, "steps_out": 3}],
+								"period_hours": [{"steps_in": 24, "steps_out": 3}],
+								"period_days": [{"steps_in": 7, "steps_out": 3}],
+								"seasonality": [{"include_time": "true", "include_date": "false"}]
+							}
+						]
+					},
+					{
+						"name": "health",
+						"description": "predict future health score",
+						"attributes": [
+							{
+								"algo": "AUTO",
+								"data_model": [{"data_in": "health,temperature,fan_status,chip_status,hashrate", "data_out": "health"}],
+								"period_minutes": [{"steps_in": 6, "steps_out": 1}],
+								"seasonality": [{"include_time": "true", "include_date": "false"}]
+							}
+						]
+					},
+					{
+						"name": "health2",
+						"description": "predict future health score (based just on health)",
+						"attributes": [
+							{
+								"algo": "AUTO",
+								"data_model": [{"data_in": "health", "data_out": "health"}],
+								"period_minutes": [{"steps_in": 4, "steps_out": 1}],
+								"seasonality": [{"include_time": "true", "include_date": "false"}]
+							}
+						]
+					},
+					{
+						"name": "temperature",
+						"description": "predict future temperature",
+						"attributes": [
+							{
+								"algo": "AUTO",
+								"data_model": [{"data_in": "temperature,fan_status,chip_status,hashrate", "data_out": "temperature"}],
+								"period_minutes": [{"steps_in": 6, "steps_out": 1}],
+								"seasonality": [{"include_time": "true", "include_date": "false"}]
+							}
+						]
+					}
+				]
+    	    }
+      	},
+      	{
+        "id": "ASIC_Baikal_GIANT_B",
+        "description": "Baikal Giant-B Miner 40-160 GH/s",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_baikal.ASIC_BAIKAL",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "64,64,64" },
+				{ "name": "hashrate", "value": [
+					{ "algo": "blake256r14", "coin": "decred", "rate": 160, "units": "GH/s", "power": 410 },
+					{ "algo": "blake256r8", "coin": "vcash,blakecoin", "rate": 160, "units": "GH/s", "power": 260 },
+					{ "algo": "blake2b", "coin": "sia", "rate": 80, "units": "GH/s", "power": 300 },
+					{ "algo": "lbry", "coin": "lbry", "rate": 40, "units": "GH/s",  "power": 400 },
+					{ "algo": "pascal", "coin": "pascal", "rate": 40, "units": "GH/s", "power": 210 }
+				]},
+				{ "name": "temp_warning", "value": "60" },
+				{ "name": "temp_error", "value": "70" },
+				{ "name": "fan_warning", "value": "0"},
+				{ "name": "check_fans", "value": "_NULL_"},
+				{ "name": "icon", "value": "crypto_miner_baikal_giant_x.jpg" }
+			]
+		}	
+      },
+      {
+        "id": "ASIC_Baikal_GIANT_X10",
+        "description": "Baikal Giant-X10 Miner 10 GH/s",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_baikal.ASIC_BAIKAL",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "64,64,64" },
+				{ "name": "hashrate", "value": [
+					{ "algo": "x11", "coin": "", "rate": 10, "units": "GH/s", "power": 630 },
+					{ "algo": "quark", "coin": "", "rate": 10, "units": "GH/s","power": 360 },
+					{ "algo": "qubit", "coin": "sia", "rate": 10, "units": "GH/s", "power": 390 },
+					{ "algo": "myriad-groestl", "coin": "digibyte,lbry", "rate": 10, "units": "GH/s", "power": 150 },
+					{ "algo": "myriadcoin-groestl", "coin": "myriad", "rate": 10, "units": "GH/s", "power": 150 },
+					{ "algo": "nist5", "coin": "pascal", "rate": 10, "units": "GH/s", "power": 250 },
+					{ "algo": "skein", "coin": "pascal", "rate": 5, "units": "GH/s", "power": 120 },
+					{ "algo": "x11-gost", "coin": "pascal", "rate": 1.35, "units": "GH/s", "power": 200 }
+				]},
+				{ "name": "temp_warning", "value": "60" },
+				{ "name": "temp_error", "value": "70" },
+				{ "name": "fan_warning", "value": "0"},
+				{ "name": "check_fans", "value": "_NULL_"},
+				{ "name": "icon", "value": "crypto_miner_baikal_giant_x.jpg" }
+			]
+		}	
+      },
+      {
+        "id": "ASIC_Baikal_GIANT_N+",
+        "description": "Baikal Giant-N+ Miner 40 KH/s",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_baikal.ASIC_BAIKAL",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "64,64,64" },
+				{ "name": "hashrate", "value": [
+					{ "algo": "cryptonight", "coin": "", "rate": 40, "units": "KH/s", "power": 130 },
+					{ "algo": "cryptonightlite", "coin": "", "rate": 80, "units": "KH/s", "power": 160 }
+				]},
+				{ "name": "temp_warning", "value": "40" },
+				{ "name": "temp_error", "value": "60" },
+				{ "name": "fan_warning", "value": "0"},
+				{ "name": "check_fans", "value": "_NULL_"},
+				{ "name": "icon", "value": "crypto_miner_baikal_giant_x.jpg" }
+			]
+		}
+      },
+      {
+        "id": "ASIC_AntMiner_L3",
+        "description": "Bitmain AntMiner L3 Litecoin Miner 250 MH/s",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_antminer.ASIC_ANTMINER",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "36,36,36,36" },
+				{ "name": "hashrate", "value": [{ "algo": "scrypt", "coin": "litecoin", "rate": 250, "units": "MH/s", "power": 800 }]}
+			]
+		}	
+      },
+      {
+        "id": "ASIC_AntMiner_L3+",
+        "description": "Bitmain AntMiner L3+ Litecoin Miner 504 MH/s",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_antminer.ASIC_ANTMINER",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "72,72,72,72" },
+				{ "name": "fan_warning", "value": "6100"},
+				{ "name": "fan_error", "value": "6200"},
+				{ "name": "hashrate", "value": [{ "algo": "scrypt", "coin": "litecoin", "rate": 504, "units": "MH/s", "power": 800 }]}
+			]
+		}	
+      },
+      {
+        "id": "ASIC_AntMiner_L3++",
+        "description": "Bitmain AntMiner L3++ Litecoin Miner 580 MH/s",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_antminer.ASIC_ANTMINER",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "72,72,72,72" },
+				{ "name": "hashrate", "value": [{ "algo": "scrypt", "coin": "litecoin", "rate": 580, "units": "MH/s", "power": 942 }]}
+			]
+		}
+      },
+      {
+        "id": "ASIC_AntMiner_S7",
+        "description": "Bitmain AntMiner S7 Bitcoin Miner 4.5 TH/s",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_antminer.ASIC_ANTMINER",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "45,45,45" },
+				{ "name": "hashrate", "value": [{ "algo": "sha256", "coin": "bitcoin", "rate": 4500, "units": "GH/s", "power": 1293 }]}
+			]
+		}	
+      },
+      {
+        "id": "ASIC_AntMiner_S9",
+        "description": "Bitmain AntMiner S9 Bitcoin Miner 13.5+ TH/s",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_antminer.ASIC_ANTMINER",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "63,63,63" },
+				{ "name": "hashrate", "value": [{ "algo": "sha256", "coin": "bitcoin", "rate": 13500, "units": "GH/s", "power": 1310 }]}
+			]
+		}	
+      },
+      {
+        "id": "ASIC_AntMiner_D3",
+        "description": "Bitmain AntMiner D3 DASH Miner 19.3 GH/s",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_antminer.ASIC_ANTMINER",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "60,60,60" },
+				{ "name": "hashrate", "value": [{ "algo": "x11", "coin": "dash", "rate": 19300, "units": "GH/s", "power": 1200 }]}
+			]
+		}	
+      },
+      {
+        "id": "ASIC_AntMiner_A3",
+        "description": "Bitmain AntMiner A3 BLAKE(2b) Miner 815 GH/s",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_antminer.ASIC_ANTMINER",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "60,60,60" },
+				{ "name": "hashrate", "value": [{ "algo": "blake2b", "coin": "sia", "rate": 815, "units": "GH/s", "power": 1186 }]},
+				{ "name": "temp_warning", "value": "95" },
+				{ "name": "temp_error", "value": "110" },
+				{ "name": "temp_error_pcb", "value": "85" }
+			]
+		}	
+      },
+      {
+        "id": "ASIC_AntMiner_T9",
+        "description": "Bitmain AntMiner T9 Bitcoin Miner 12.5 TH/s",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_antminer.ASIC_ANTMINER",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "57,57,57" },
+				{ "name": "hashrate", "value": [{ "algo": "sha256", "coin": "bitcoin", "rate": 12500, "units": "GH/s", "power": 1450 }]}
+			]
+		}	
+      },
+      {
+        "id": "ASIC_AntMiner_R4",
+        "description": "Bitmain AntMiner R4 Bitcoin Miner 8 TH/s",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_antminer.ASIC_ANTMINER",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "63,63" },
+				{ "name": "hashrate", "value": [{ "algo": "sha256", "coin": "bitcoin", "rate": 8000, "units": "GH/s", "power": 800 }]}
+			]
+		}	
+      },
+      {
+        "id": "ASIC_AntMiner_V9",
+        "description": "Bitmain AntMiner V9 Bitcoin Miner 4 TH/s",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_antminer.ASIC_ANTMINER",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "45,45,45" },
+				{ "name": "hashrate", "value": [{ "algo": "sha256", "coin": "bitcoin", "rate": 4000, "units": "GH/s", "power": 1027 }]}
+			]
+		}	
+      },
+      {
+        "id": "ASIC_AntMiner_E3",
+        "description": "Bitmain AntMiner E3 Ethereum Miner 180 MH/s",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_antminer.ASIC_ANTMINER",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "2,2,2,2,2,2,2,2,2" },
+				{ "name": "hashrate", "value": [
+					{ "algo": "ethash", "coin": "ETH", "rate": 180, "units": "MH/s", "power": 707 },
+					{ "algo": "daggerhashimoto", "coin": "ETH", "rate": 180, "units": "MH/s", "power": 707 }]},
+				{ "name": "temp_warning", "value": "95" },
+				{ "name": "temp_error", "value": "110" },
+				{ "name": "temp_error_pcb", "value": "85" },
+				{ "name": "icon", "value": "crypto_miner_bitmain_antminer_e3.png" }
+			]
+		}
+      },
+      {
+        "id": "GPU_Claymore",
+        "description": "Claymore EtherMiner Multi-GPU",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.gpu_claymore.GPU_CLAYMORE",
+        "model_subclasstype": "GPU_MINER",
+		"phenome": {
+			"property_model": [
+				{ "name": "check_gpus", 		"description": "Checks GPUs", 			 "property_type": "ACTION", "value_type": "TEXT", "default": "", "model_only": "1", "attributes": [{ "action": "check_gpus"}]}
+			],
+			"action_model": [
+				{ "name": "miner_restart", 		"description": "Miner restart script",	 "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"miner_restart", "show_in_ui": "true", "delay_secs": "30", "create_method": "True"}]},
+				{ "name": "miner_reboot", 		"description": "Miner reboot script",	 "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"miner_reboot", "show_in_ui": "true", "delay_secs": "30", "create_method": "True"}]}
+			]
+		},
+		"properties": {
+			"property": [
+				{ "name": "api_port", "value": "3333"},
+				{ "name": "ui_port", "value": "3333"},
+				{ "name": "hashrate", "value": [{ "algo": "ethash", "coin": "ETH", "rate": 0, "units": "MH/s", "power": 0 }]},
+				{ "name": "fan_warning", "value": "90"},
+				{ "name": "temp_warning", "value": "70" },
+				{ "name": "temp_error", "value": "85" },
+				{ "name": "check_chips", "value": "_NULL_"},
+				{ "name": "icon", "value": "crypto_mining_rig.png" }
+			]
+		}
+      },
+      {
+        "id": "ASIC_Avalon_V7",
+        "description": "Canaan Avalon V7XX Miners 7 TH/s",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_avalonminer.ASIC_AVALONMINER",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "22,22,22,22" },
+				{ "name": "hashrate", "value": [{ "algo": "sha256", "coin": "bitcoin", "rate": 7300, "units": "GH/s", "power": 1150 }]}
+			]
+		}
+      },
+
+	  {
+		"id": "ROOT_MINING_POOL",
+		"description": "All Pools",
+		"model_classtype": "CRYPTO_MINING_POOL",
+		"model_classname": "minermedic.pools.base_pool.BasePool",
+		"phenome": {
+			"property_model": [
+				{ "name": "configuration", "description": "Configuration parameters for the Mining Pool", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "", "attributes": [{}]}
+			]
+		}
+	  }
+    ]
+  }
+}
+

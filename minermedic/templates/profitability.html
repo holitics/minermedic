@@ -1,0 +1,43 @@
+<!--
+profitability.html
+Minermedic Prototype
+Copyright (c) 2019 Nicholas Saparoff, Phenome Project
+-->
+
+<!-- This is slide "4" -->
+
+{% extends "layout.html" %}
+{% block title %}Profitability{% endblock %}
+{% block head %}
+  {{ super() }}
+
+	<link rel="stylesheet" media="all" href="static/lib/css/holitics-barchart-1.0.css?v=1.0"/>
+	<link rel="stylesheet" media="all" href="static/lib/css/holitics-effects-1.0.css?v=1.0"/>
+
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="static/lib/js/d3tip-v4.js"></script>
+
+{% endblock %}
+
+{% block carousel_indicator_4 %}active{% endblock %} 
+{% block carousel_item_4 %}active{% endblock %}
+{% block content4 %}
+
+    <h1 class="mt-3 text-light">Profitability</h1>
+	<p class="important">
+	Current profitability of Miners.
+
+	{% include "profitability-toolbar.html" %}
+	
+	<div id="vis" style="display:block;margin:auto;text-align:center;"></div>
+
+	<script src="static/lib/js/holitics-api-common.js" ></script>
+	<script src="static/lib/js/holitics-barchart.js" ></script>
+	<script src="static/apps/minermedic/lib/js/profitability.js" ></script>
+
+	<script>
+		build_plot_title();
+		reload_data(series_index_columns);
+	</script>
+	
+{% endblock %}

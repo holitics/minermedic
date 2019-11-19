@@ -1,0 +1,71 @@
+<!--
+status.html
+Minermedic Prototype
+Copyright (c) 2019 Nicholas Saparoff, Phenome Project
+-->
+
+<!-- This is slide "2" -->
+
+{% extends "layout.html" %}
+{% block title %}Status{% endblock %}
+{% block head %}
+  {{ super() }}
+	<link rel="stylesheet" media="all" href="static/lib/css/holitics-statusmap-1.0.css?v=1.0"/>
+{% endblock %}
+
+{% block carousel_indicator_2 %}active{% endblock %} 
+{% block carousel_item_2 %}active{% endblock %}
+{% block content2 %}
+
+  <h1 class="mt-3 text-light">Status</h1>
+  <p class="important">
+	Health status for all monitored Objects.
+	
+	<div id="vis"></div>
+
+	<div id="legend" class="healthstatusdark" align="center">
+		<ul>
+			<li class="q1-11"></li>
+			<li class="q2-11"></li>
+			<li class="q3-11"></li>
+			<li class="q4-11"></li>
+			<li class="q5-11"></li>
+			<li class="q6-11"></li>
+			<li class="q7-11"></li>
+			<li class="q8-11"></li>
+			<li class="q9-11"></li>
+			<li class="q10-11"></li>
+			<li class="q11-11"></li>
+		</ul>
+		<p class="more">error</p>
+		<p class="less">normal</p>
+	</div>
+
+    
+{% endblock %}
+
+{% block body_footer_javascript %}
+
+	<script src="static/lib/js/d3-2.1.1/d3.min.js"></script>
+	<script src="static/lib/js/d3-2.1.1/d3.layout.min.js"></script>
+	<script src="static/lib/js/browser-detect.js?v=1.0"></script>
+	<script src="static/lib/js/holitics-statusmap.js?v=1.01"></script>
+
+	<!-- populate the status map -->
+	<!-- we will query the basic API call for classtypes (no details) -->
+	
+	<script>
+
+			var classtype_json = {};
+			
+			d3.json('/api/v1/get_model_classtypes/ALL/0/0', function(json) {
+				classtype_json = json;
+				d3.json('/api/v1/get_healthscores/0', function(json) {
+					buildStatusMap(json, classtype_json);
+				});
+			});
+		
+	</script>
+
+
+{% endblock %}

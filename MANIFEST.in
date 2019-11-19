@@ -1,0 +1,21 @@
+recursive-include phenome *
+recursive-include minermedic *
+
+recursive-exclude phenome/data *
+recursive-exclude phenome/logs *
+recursive-exclude phenome_core *
+
+include *.dist
+include run.py
+include run.sh
+include run_headless.sh
+
+global-exclude .DS_Store
+global-exclude *.pyc
+
+exclude phenome/config/meta/unittest.json
+exclude setup.py
+exclude setup_functions.py
+exclude make_package.sh
+exclude run_tests.sh
+exclude MANIFEST.in

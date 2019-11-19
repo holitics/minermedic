@@ -1,0 +1,16 @@
+--extra-index-url https://api.packagr.app/AvVcpYfO2/
+
+# PACKAGES REQUIRED
+
+phenome-core>=1.0.393
+
+# --------------------------------------------------------
+
+# For RUUVITAG support, un-comment the following line:
+#
+# ruuvitag-sensor==0.13.0
+#
+# May have to install using following comments on issue:
+# https://github.com/ttu/ruuvitag-sensor/issues/18#issuecomment-386607616
+
+# --------------------------------------------------------

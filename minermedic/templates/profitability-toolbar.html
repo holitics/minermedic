@@ -1,0 +1,45 @@
+
+<div id="controls" style="text-align:center;" class="mt-4 mb-4">
+
+
+	<div class="btn-group btn-group-toggle" data-toggle="buttons" style="padding-right:20px;">
+	  <label class="btn btn-secondary btn-sm active" onclick="javascript:changed_data_type(0);">
+		<input type="radio" name="options" id="hour" autocomplete="off" checked>Costs
+	  </label>
+	  <label class="btn btn-secondary btn-sm" onclick="javascript:changed_data_type(1);">
+		<input type="radio" name="options" id="day" autocomplete="off"> Profits
+	  </label>
+	</div>
+
+	<div class="btn-group btn-group-toggle" data-toggle="buttons">
+
+	  <label class="btn btn-secondary btn-sm" onclick="javascript:changed_period_type(3);">
+		<input type="radio" name="options" id="hour" autocomplete="off"> Hour
+	  </label>
+	  <label class="btn btn-secondary btn-sm" onclick="javascript:changed_period_type(4);">
+		<input type="radio" name="options" id="day" autocomplete="off"> Day
+	  </label>
+	  <label class="btn btn-secondary btn-sm active" onclick="javascript:changed_period_type(6);">
+		<input type="radio" name="options" id="month" autocomplete="off" checked> Month
+	  </label>
+
+	  <div class="btn-group">
+		<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+		   Grouping
+		</button>
+		<div class="dropdown-menu">
+		  <a class="dropdown-item" href="#" onclick="javascript:changed_groupby_columns(this.innerHTML,'NONE');">NONE</a>
+		  <a class="dropdown-item" href="#" onclick="javascript:changed_groupby_columns(this.innerHTML,'object_id');">Miner</a>
+		  <a class="dropdown-item" href="#" onclick="javascript:changed_groupby_columns(this.innerHTML,'model_id');">Model</a>
+		  <a class="dropdown-item" href="#" onclick="javascript:changed_groupby_columns(this.innerHTML,'pool');">Pool</a>
+		  <a class="dropdown-item" href="#" onclick="javascript:changed_groupby_columns(this.innerHTML,'algo');">Algo</a>
+		  <a class="dropdown-item" href="#" onclick="javascript:changed_groupby_columns(this.innerHTML,'coin');">Coin</a>
+		  <a class="dropdown-item" href="#" onclick="javascript:changed_groupby_columns(this.innerHTML,'object_id+algo');">Miner+Algo</a>
+		  <a class="dropdown-item" href="#" onclick="javascript:changed_groupby_columns(this.innerHTML,'object_id+pool');">Miner+Pool</a>
+		  <a class="dropdown-item" href="#" onclick="javascript:changed_groupby_columns(this.innerHTML,'model_id+algo');">Model+Algo</a>
+		  <a class="dropdown-item" href="#" onclick="javascript:changed_groupby_columns(this.innerHTML,'model_id+pool');">Model+Pool</a>
+		  <a class="dropdown-item" href="#" onclick="javascript:changed_groupby_columns(this.innerHTML,'pool+algo');">Pool+Algo</a>
+		</div>
+	  </div>
+	</div>
+</div>
