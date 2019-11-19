@@ -2,9 +2,9 @@
 
 import sys
 
-from test import BaseTest
+from phenome.test import BaseTest
+from phenome.test.supporting.test_mockobject import MockObject
 from minermedic.miner_results import MinerResults
-from test.supporting.test_mockobject import MockObject
 
 from minermedic.sensorchecks.chips import ChipCheck
 from minermedic.sensorchecks.gpus import GPUCheck
@@ -20,12 +20,12 @@ sys._unit_tests_app_name = "minermedic"
 
 CONST_API_PORT = 5000
 
+
 class TestSensorChecks(BaseTest):
 
     def setUp(self):
 
         super(TestSensorChecks, self).setUp()
-
 
     def test_001_chips_no_error(self):
 

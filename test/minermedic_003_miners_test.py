@@ -2,7 +2,7 @@
 
 import sys, time
 
-from test import BaseTest
+from phenome.test import BaseTest
 from minermedic.miner_results import MinerResults
 from phenome_core.core.database.model.api import create_temporary_object, get_object_by_unique_id
 from phenome_core.core.base.logger import root_logger as logger
@@ -122,7 +122,6 @@ class TestMiners(BaseTest):
         self.assertEqual(miner_chips['total'], 12)
         self.assertEqual(str(uptime), '0:31:00')
 
-
     def test_002_miner_BAIKAL_GIANT_N(self):
 
         from minermedic.miners.asic_baikal import ASIC_BAIKAL
@@ -139,7 +138,6 @@ class TestMiners(BaseTest):
         self.assertEqual(hw_error_rates, '0.0')
         self.assertEqual(miner_chips['total'], 192)
         self.assertEqual(str(uptime), '0:22:29')
-
 
     def test_003_miner_BAIKAL_GIANT_B(self):
 
@@ -158,7 +156,6 @@ class TestMiners(BaseTest):
         self.assertEqual(miner_chips['total'], 192)
         self.assertEqual(str(uptime), '2 days, 19:22:39')
 
-
     def test_004_miner_BAIKAL_X10(self):
 
         from minermedic.miners.asic_baikal import ASIC_BAIKAL
@@ -175,7 +172,6 @@ class TestMiners(BaseTest):
         self.assertEqual(hw_error_rates, '0.0')
         self.assertEqual(miner_chips['total'], 192)
         self.assertEqual(str(uptime), '0:09:22')
-
 
     def test_005_miner_ANTMINER_E3(self):
 
@@ -194,7 +190,6 @@ class TestMiners(BaseTest):
         self.assertEqual(miner_chips['total'], 18)
         self.assertEqual(str(uptime), '0:26:31')
 
-
     def test_006_miner_ANTMINER_S9(self):
 
         from minermedic.miners.asic_antminer import ASIC_ANTMINER
@@ -211,7 +206,6 @@ class TestMiners(BaseTest):
         self.assertEqual(hw_error_rates, '0.0')
         self.assertEqual(miner_chips['total'], 189)
         self.assertEqual(str(uptime), '0:04:08')
-
 
     def test_007_miner_ANTMINER_L3_P(self):
 
@@ -247,7 +241,6 @@ class TestMiners(BaseTest):
         self.assertEqual(miner_chips['total'], 180)
         self.assertEqual(str(uptime), '1 day, 9:32:39')
 
-
     def test_009_miner_ANTMINER_A3(self):
         # TODO - get dump of the A3 and implement
         pass
@@ -277,7 +270,6 @@ class TestMiners(BaseTest):
         self.assertEqual(hw_error_rates, '0.0037')
         self.assertEqual(miner_chips['active'], 88)
         self.assertEqual(str(uptime), '0:02:59')
-
 
     def test_012_miner_INNOSILICON_A4(self):
         pass

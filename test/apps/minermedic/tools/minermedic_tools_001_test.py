@@ -1,17 +1,18 @@
 # minermedic_tools_001_test.py, Copyright (c) 2019, Phenome Project - Nicholas Saparoff <nick.saparoff@gmail.com>
 
 import os, sys, pytest, unittest, logging, configparser
-from test import BaseTest
+from phenome.test import BaseTest
 
 CONST_APP_NAME = 'minermedic'
-
 CONST_API_PORT = 6001
+
 
 class TestMinerDumper(BaseTest):
 
     def setUp(self):
 
         global CONST_API_PORT
+
         # increment the port
         CONST_API_PORT = CONST_API_PORT + 1
 
@@ -43,7 +44,6 @@ class TestMinerDumper(BaseTest):
             # create the dumper
             dumper = MinerDumper()
 
-
             # TEST 1!!
             args = ['-ip', '0.0.0.0', '-port', str(self.api_port)]
             dumper.contact(args)
@@ -56,7 +56,6 @@ class TestMinerDumper(BaseTest):
             dumper.contact(args)
             output = dumper.get_last_response()
             self.assertEqual(output['STATS'][1]['ID'],'BC50')
-
 
         except Exception as ex:
             pass

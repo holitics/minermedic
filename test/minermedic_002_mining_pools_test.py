@@ -2,10 +2,11 @@
 # minermedic_002_mining_pools_test.py, Copyright (c) 2019, Phenome Project - Nicholas Saparoff <nick.saparoff@gmail.com>
 
 import sys
-from test import BaseTest
+
+from phenome.test import BaseTest
+from phenome.test.supporting.test_mockobject import MockObject
 from minermedic.pools.helper import process_pool_apis
 from minermedic.miner_results import MinerResults
-from test.supporting.test_mockobject import MockObject
 from phenome import flask_app
 from phenome_core.core.base.logger import root_logger as logger
 from phenome_core.core.database.model.api import get_objectmodel_by_name

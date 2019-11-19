@@ -1,7 +1,7 @@
 # minermedic_001_test.py, Copyright (c) 2019, Phenome Project - Nicholas Saparoff <nick.saparoff@gmail.com>
 
 import sys
-from test import BaseTest
+from phenome.test import BaseTest
 from phenome_core.core.globals import global_enums
 from minermedic.miners.helper import get_normalized_hashrate_from_gigahash_per_sec
 from phenome_core.core.database.model.api import get_default_propertyvalues_by_classtype_and_property
@@ -19,11 +19,11 @@ sys._unit_tests_load_app_meta_data = True
 sys._unit_tests_loaded_app_meta_data = False
 
 
-# This TestMetaData can be used on each APP Specific Unit Test File
-class TestMetaData(BaseTest):
+# This TestAppMetaData Class can be used on each APP Specific Unit Test File
+class TestAppMetaData(BaseTest):
 
     def setUp(self):
-        super(TestMetaData, self).setUp()
+        super(TestAppMetaData, self).setUp()
 
     def test_metadata_001_app_json(self):
         self._test_metadata(sys._unit_tests_app_name + ".json", True)
@@ -57,10 +57,10 @@ class TestMinerMedic(BaseTest):
         hashrate_info = {"algo": "scrypt", "coin": "litecoin", "rate": 250, "units": "MH/s", "power": 800}
 
         current_hashrate, hashrate_units = get_normalized_hashrate_from_gigahash_per_sec(hashrate_ghs5s, hashrate_info['units'])
-        self.assertTrue(current_hashrate == hashrate_ghs5s*1000)
+        self.assertTrue(current_hashrate == hashrate_ghs5s * 1000)
 
         current_hashrate, hashrate_units = get_normalized_hashrate_from_gigahash_per_sec(hashrate_ghs5s, "KH/s")
-        self.assertTrue(current_hashrate == hashrate_ghs5s * 1000*1000)
+        self.assertTrue(current_hashrate == hashrate_ghs5s * 1000 * 1000)
 
         current_hashrate, hashrate_units = get_normalized_hashrate_from_gigahash_per_sec(hashrate_ghs5s, "H/s")
         self.assertTrue(current_hashrate == hashrate_ghs5s * 1000 * 1000 * 1000)
