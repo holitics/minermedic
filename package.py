@@ -22,7 +22,7 @@ new_tarball_path = "./build/" + NAME + ".tar.gz"
 
 os.mkdir("./build")
 
-print("Core agent tarball=./dist/{}".format(tarball_name))
+print("{} tarball=./dist/{}".format(NAME, tarball_name))
 
 # move/rename the tarball
 os.rename("./dist/" + tarball_name, new_tarball_path)
@@ -37,9 +37,7 @@ os.rename(versioned_pathname, working_pathname)
 
 # clean up the working directory
 shutil.rmtree(working_pathname + "/" + NAME + ".egg-info")
-#os.remove(working_pathname + "/PKG-INFO")
 os.remove(working_pathname + "/setup.cfg")
-os.remove(working_pathname + "/README.rst")
 
 # iterate through APPs and do app specific things to create each package
 for app in APPS:
