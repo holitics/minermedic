@@ -86,6 +86,6 @@ $ ./run_tests.sh
 
 At this point you should be ready to start running / debugging the application in the IDE. If you have PyCharm, simply go to "File" -> "Open" and point to the **minermedic** folder. Once opened, create a Run/Debug configuration by going to "Run" -> "Edit Configurations".
 
-![Debug Configuration For PyCharm](http://staging2.phenome.ai/wp-content/uploads/2019/11/PyCharm_DEBUG_Config.png)
+![Debug Configuration For PyCharm](http://phenome.ai/wp-content/uploads/2019/11/PyCharm_DEBUG_Config.png)
 
 Make sure to use **Python 3.6+**. Also for a DEBUG configuration, make sure to add the parameters: **"--debug True"**
