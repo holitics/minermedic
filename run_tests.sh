@@ -8,11 +8,16 @@ if [ -z "$has_core" ]; then
 fi
 
 if [ ! -d "phenome" ]; then
+	
 	echo "Installing Phenome Extensions..."
+	
 	# must have the PHENOME extensions installed
 	# the packaged distro has the needed extensions, but when
 	# cloning directly from GitHub, the dependencies may not be there.
-	git clone https://github.com/holitics/phenome-extensions phenome
+
+	# TODO - remove the auth token when making extensions Repo public
+	git clone https://${GH_TOKEN}@github.com/holitics/phenome-extensions phenome
+	
 fi
 
 # run the tests
