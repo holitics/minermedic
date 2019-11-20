@@ -4,13 +4,13 @@
 
 MinerMedic is a CryptoCurrency Miner Monitoring, Automation, and Prediction tool based on the [Phenome AI](https://phenome.ai/) platform. Visit the [MinerMedic](https://phenome.ai/apps/minermedic/) page to learn more or to download a pre-built package that already includes the [Phenome Extensions](https://github.com/holitics/phenome-extensions).
 
-MinerMedic is written completely in Python (supporting v3.6+) and so can run on a variety of platforms including OSX, Linux deviants, Windows, and hardware including small ARM based devices like Raspberry PI, Jetson Nano, etc. 
+MinerMedic is written completely in Python (supporting v3.6, v3.7) and so can run on a variety of platforms including OSX, Linux deviants, Windows, and hardware including small ARM based devices like Raspberry PI, Jetson Nano, etc. 
 
 MinerMedic is a **Flask Application**. It has a REST API and a simple embedded UI interface. If you are familiar with Python, Flask and JSON, it's fairly easy to add new Miners, Pools, and features. Contributions to the project are highly welcome!
 
 ## Getting Started
 
-Please note, these instructions assume you have a minimum of [Python 3.6](https://www.python.org/downloads/) and [git](https://git-scm.com/downloads) installed.
+Please note, these instructions assume you have a minimum of [Python 3.6](https://www.python.org/downloads/) and [git](https://git-scm.com/downloads) installed. **Do not use Python 3.8+** as some of the dependencies like TensorFlow, Keras, SQLAlchemy may not work correctly due to deprecation (WIP).
 
 First clone the source:
 ```
@@ -88,4 +88,4 @@ At this point you should be ready to start running / debugging the application i
 
 ![Debug Configuration For PyCharm](http://phenome.ai/wp-content/uploads/2019/11/PyCharm_DEBUG_Config.png)
 
-Make sure to use **Python 3.6+**. Also for a DEBUG configuration, make sure to add the parameters: **"--debug True"**
+Make sure to use **Python 3.6 or 3.7**. Also for a DEBUG configuration, make sure to add the parameters: **"--debug True"**
