@@ -71,6 +71,8 @@ if __name__ == '__main__':
         # just assume it's DEBUG mode..
         is_debug = True
 
+    # NOTE: to startup Flask with self-signed cert in HTTPS add ", ssl_context='adhoc'" to the end of the params
+
     # Run the app and WAIT until finished
     flask_app.run(threaded=True, debug=is_debug, host='0.0.0.0', port=web_listen_port, use_reloader=False)
 
