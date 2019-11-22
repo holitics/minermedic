@@ -4,7 +4,7 @@
 
 MinerMedic is a CryptoCurrency Miner Monitoring, Automation, and Prediction tool based on the [Phenome AI](https://phenome.ai/) platform. Visit the [MinerMedic](https://phenome.ai/apps/minermedic/) page to learn more or to download a pre-built package that already includes the [Phenome Extensions](https://github.com/holitics/phenome-extensions).
 
-MinerMedic is written completely in Python (supporting v3.6, v3.7) and so can run on a variety of platforms including OSX, Linux deviants, Windows, and hardware including small ARM based devices like Raspberry PI, Jetson Nano, etc. 
+MinerMedic is written in Python (supporting v3.6, v3.7) and so can run on a variety of platforms including OSX, Linux deviants, and hardware including small ARM based devices like Raspberry PI, Jetson Nano, etc. **Windows is currently not supported** but plans to do so are in the mix.
 
 MinerMedic is a **Flask Application**. It has a REST API and a simple embedded UI interface. If you are familiar with Python, Flask and JSON, it's fairly easy to add new Miners, Pools, and features. Contributions to the project are highly welcome!
 
