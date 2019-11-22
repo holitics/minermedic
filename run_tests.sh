@@ -16,7 +16,7 @@ if [ ! -d "phenome" ]; then
 	# cloning directly from GitHub, the dependencies may not be there.
 
 	# TODO - remove the auth token when making extensions Repo public
-	git clone https://${GH_TOKEN}@github.com/holitics/phenome-extensions phenome
+	git clone https://github.com/holitics/phenome-extensions phenome
 	
 fi
 
