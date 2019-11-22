@@ -57,7 +57,7 @@ for app in APPS:
 		
 	# move the ini sample file to the root of the distribution
 	source_ini_file = target_app_folder + "/{}/{}.ini.dist".format(app,app)
-	dest_init_file = target_app_folder + "/{}.ini.sample".format(app)
+	dest_init_file = target_app_folder + "/{}.ini".format(app)
 	shutil.move(source_ini_file, dest_init_file)
 
 	# finally TAR into the resulting distribution tarball

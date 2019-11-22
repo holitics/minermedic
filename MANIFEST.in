@@ -9,6 +9,7 @@ include *.dist
 include run.py
 include run.sh
 include run_headless.sh
+include requirements.txt
 
 global-exclude .DS_Store
 global-exclude *.pyc
