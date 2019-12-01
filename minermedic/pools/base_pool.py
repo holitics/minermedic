@@ -175,7 +175,7 @@ class BasePool():
 
         pass
 
-    def get_pool_stats(self, results, miner, worker, algo, pool_id):
+    def get_pool_stats(self, results, miner, worker, algo, pool_id, pool_url):
 
         """
         Pool specific implementation that calls to the Pool API and then passes the response to "parse_json"
@@ -185,6 +185,7 @@ class BasePool():
         :param worker: The worker (string)
         :param algo: The algo being mined (string)
         :param pool_id: The Pool ID (integer)
+        :param pool_url: The original passed pool url
 
         :return: None
 

@@ -81,7 +81,8 @@
 					{ "key": "nicehash", "value": "1", "attributes": [{ "description": "NiceHash Mining Pool", "url_match": "(.*).(.*).nicehash.com", "classname": "minermedic.pools.nicehash.NiceHashPool"}] },
 					{ "key": "ethermineETH", "value": "2" , "attributes": [{ "description": "Ethereum Mining Pool", "url_match": "((us[1-9])|(asia[1-9])|(eu[1-9])).ethermine.org", "classname": "minermedic.pools.ethermine.EtherminePool"}] },
 					{ "key": "ethermineETC", "value": "3" , "attributes": [{ "description": "Ethereum Classic Mining Pool", "url_match": "(.*)-(etc.ethermine.org)", "classname": "minermedic.pools.ethermine_etc.EthermineETCPool"}] },
-					{ "key": "miningpoolhub", "value": "4" , "attributes": [{ "description": "Mining Pool Hub", "url_match": "(.*)(miningpoolhub.com)", "classname": "minermedic.pools.mpos.MPOS"}] }
+					{ "key": "miningpoolhub", "value": "4" , "attributes": [{ "description": "Mining Pool Hub", "url_match": "(.*)(miningpoolhub.com)", "classname": "minermedic.pools.mpos.MPOS"}] },
+					{ "key": "f2pool", "value": "5" , "attributes": [{ "description": "F2Pool", "url_match": "(.*)(.f2pool.com)(.*)", "classname": "minermedic.pools.f2pool.F2Pool"}] }
 				]
        		},
     		{	"id": "_COINS_",
@@ -148,7 +149,8 @@
 					{ "name": "profitable", "description": "Flag for whether the miner is profitable (1==YES, 0==NO).", "property_type": "STATE", "value_type": "INTEGER", "default": "1", "model_only": "0" },
 					{ "name": "last_profitcheck_time", "description": "Last time the miner was checked for profitability (time/milliseconds)", "property_type": "STATE", "value_type": "INTEGER", "default": "0", "model_only": "0" },
 					{ "name": "next_profitcheck_time", "description": "Next time the miner will be checked for profitability (time/milliseconds)", "property_type": "STATE", "value_type": "INTEGER", "default": "0", "model_only": "0" },
-					{ "name": "idle_cycles_count", "description": "The current count of idle cycles (no work from pool)", "property_type": "STATE", "value_type": "INTEGER", "default": "0", "model_only": "0" },
+					{ "name": "last_share_time", 	"description": "Last time the miner submitted a share to the pool", "property_type": "STATE", "value_type": "INTEGER", "default": "0", "model_only": "0" },
+					{ "name": "idle_cycles_count", 	"description": "The current count of idle cycles (no work from pool)", "property_type": "STATE", "value_type": "INTEGER", "default": "0", "model_only": "0" },
 					{ "name": "check_temps", 		"description": "Checks temperatures", 	 "property_type": "ACTION", "value_type": "TEXT", "default": "", "model_only": "1", "attributes": [{ "action": "check_temps"}]},
 					{ "name": "check_chips", 		"description": "Checks chips", 			 "property_type": "ACTION", "value_type": "TEXT", "default": "", "model_only": "1", "attributes": [{ "action": "check_chips"}]},
 					{ "name": "check_hashrate", 	"description": "Checks miner hashrate",  "property_type": "ACTION", "value_type": "TEXT", "default": "", "model_only": "1", "attributes": [{ "action": "check_hashrate"}]},
@@ -619,7 +621,20 @@
 			]
 		}
       },
-
+      {
+        "id": "ASIC_InnoSilicon_A4",
+        "description": "INNOSILICON A4 Dominator",
+		"comment": "Each unit has 2 hash boards, hashes about 70MHs per board, and uses 520W. The controller can support up to 3 units",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_innosilicon.ASIC_INNOSILICON",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "20" },
+				{ "name": "hashrate", "value": [{ "algo": "scrypt", "coin": "litecoin", "rate": 70, "units": "MH/s", "power": 260 }]}
+			]
+		}
+      },
 	  {
 		"id": "ROOT_MINING_POOL",
 		"description": "All Pools",

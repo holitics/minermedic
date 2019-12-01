@@ -26,7 +26,7 @@ class NiceHashPool(BasePool):
     # with Nicehash, the coin is always BTC
     _DEFAULT_COIN_ = "BTC"
 
-    def get_pool_stats(self, results, miner, worker, algo, pool_id):
+    def get_pool_stats(self, results, miner, worker, algo, pool_id, pool_url):
 
         # ensure we have an ALGO IDX (i.e. it is known by the system)
         algo_idx = get_algo_index(algo)

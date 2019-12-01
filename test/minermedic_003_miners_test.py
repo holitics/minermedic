@@ -77,7 +77,7 @@ class TestMiners(BaseTest):
 
         try:
 
-            miner_class.poll(miner,results)
+            miner.poll(results)
 
             if alt_miner_unique_id is not None:
                 # specify another Miner ID to get the results for
@@ -272,4 +272,22 @@ class TestMiners(BaseTest):
         self.assertEqual(str(uptime), '0:02:59')
 
     def test_012_miner_INNOSILICON_A4(self):
+
         pass
+
+        from minermedic.miners.asic_innosilicon import ASIC_INNOSILICON
+
+        model_id = "ASIC_InnoSilicon_A4"
+        sim_file = "innosilicon_a4.py"
+
+        fan_speeds, temperature, hw_error_rates, miner_chips, uptime = \
+            self._test_miner(model_id, ASIC_INNOSILICON, None, sim_file)
+
+        # now do the tests
+
+        # No fan speeds available
+        self.assertEqual(temperature, 54)
+        self.assertEqual(hw_error_rates, '0.0043')
+        self.assertEqual(miner_chips['total'], 80)
+        self.assertEqual(str(uptime), '2:07:05')
+

@@ -13,14 +13,17 @@ pool_lookups = {}
 # dictionary of pool objects
 pool_objects = {}
 
-# dictionary of RAW coin name lookups
-coin_names = {}
+# dictionary of COIN symbols by RAW coin name lookups
+coin_symbol_by_name = {}
 
 # quick lookup of coin ID by NAME
-coin_name_to_index = {}
+coin_index_by_name = {}
 
 # quick lookup to get coin SYMBOL by ID
-coin_index_to_symbol = {}
+coin_symbol_by_index = {}
+
+# quick lookup to get coin NAME by SYMBOL
+coin_name_by_symbol = {}
 
 # some URLs
 coin_cost_url = "https://min-api.cryptocompare.com/data/price?fsym={COIN}&tsyms={CURRENCY}"
@@ -33,6 +36,28 @@ Contains a number of functions to help with parsing pool results, coin lookups, 
 
 """
 
+
+def get_coin_name_by_symbol(coin_symbol):
+
+    """
+    Retrieves a coin NAME when passed a coin SYMBOL
+
+    Returns:
+        String
+
+    """
+
+    coin_name = coin_name_by_symbol.get(coin_symbol.lower())
+
+    if coin_name is None:
+        # init the coin_symbol_by_name with names and symbols
+        coin_index = get_coin_index_by_name(coin_symbol)
+        # now retrieve it
+        coin_name = coin_name_by_symbol[coin_symbol.lower()]
+
+    return coin_name
+
+
 def get_coin_symbol_by_index(coin_index):
 
     """
@@ -43,7 +68,7 @@ def get_coin_symbol_by_index(coin_index):
 
     """
 
-    coin_symbol = coin_index_to_symbol.get(coin_index)
+    coin_symbol = coin_symbol_by_index.get(coin_index)
     if coin_symbol is not None:
         return coin_symbol
 
@@ -56,7 +81,7 @@ def get_coin_symbol_by_index(coin_index):
         coin_symbol = None
 
     if coin_symbol is not None:
-        coin_index_to_symbol[coin_index] = coin_symbol
+        coin_symbol_by_index[coin_index] = coin_symbol
 
     return coin_symbol
 
@@ -117,7 +142,7 @@ def get_coin_index_by_name(coin):
 
     """
 
-    coin_index = coin_name_to_index.get(coin)
+    coin_index = coin_index_by_name.get(coin)
 
     if coin_index is not None:
         return coin_index
@@ -127,19 +152,28 @@ def get_coin_index_by_name(coin):
     # now the hard work begins
     coin_details = global_enums.get_enum_details('_COINS_')
 
-    if len(coin_names) == 0 or len(coin_names)!=len(coin_details):
-        # need to build coin names
+    if len(coin_symbol_by_name) == 0 or len(coin_symbol_by_name)!=len(coin_details):
+        # need to build coin lookups
         for c_detail in coin_details:
+
+            # build the keys
             coin_name_key = _clean_string_for_key(c_detail.value['CoinName'])
-            coin_names[coin_name_key] = c_detail.name
+            coin_name_key_symbol = _clean_string_for_key(c_detail.value['Symbol']).lower()
+
+            coin_symbol_by_name[coin_name_key] = c_detail.name
+            coin_name_by_symbol[coin_name_key_symbol] = coin_name_key
 
     # now do a lookup in the coin name
     coin_name_clean = _clean_string_for_key(coin)
-    coin_symbol = coin_names.get(coin_name_clean)
+    coin_symbol = coin_symbol_by_name.get(coin_name_clean)
+
+    if coin_symbol is None and coin_name_by_symbol.get(coin.lower()) is not None:
+        coin_symbol = coin.upper()
+
     if coin_symbol is None:
         # one more try
         coin_name_clean = _clean_string_for_key(coin.split("-")[0])
-        coin_symbol = coin_names.get(coin_name_clean)
+        coin_symbol = coin_symbol_by_name.get(coin_name_clean)
 
     if coin_symbol is not None:
         try:
@@ -149,7 +183,7 @@ def get_coin_index_by_name(coin):
 
     if coin_index >= 0:
         # we found it, add to the lookup for next time
-        coin_name_to_index[coin] = coin_index
+        coin_index_by_name[coin] = coin_index
 
     return coin_index
 
@@ -168,9 +202,12 @@ def get_coin_index(coin):
     coins = global_enums.get_enum('_COINS_')
 
     try:
-        coin_index = coins[coin].value
+        # coin symbol keys are stored in UPPERCASE
+        coin_index = coins[coin.upper()].value
     except KeyError:
         coin_index = -1
+    except Exception as ex:
+        logger.exception(ex)
 
     if coin_index == -1:
         coin_index = get_coin_index_by_name(coin)
@@ -253,7 +290,7 @@ def get_algo(mining_pool):
 
     if mining_pool is not None:
         x = mining_pool.count('.')
-        if x>=3:
+        if x >= 3:
             algo = mining_pool.split(".")[0]
 
     return algo
@@ -333,14 +370,14 @@ def process_pool_apis(results, miner, worker, algo, pool):
                     logger.debug(ex)
 
             # execute the "get_pool_stats(...)" method
-            success = mining_pool.get_pool_stats(results, miner, worker, algo, int(pool_id))
+            success = mining_pool.get_pool_stats(results, miner, worker, algo, int(pool_id), pool)
 
     else:
         pool_not_supported = True
         logger.warning("POOL {} not yet supported".format(pool))
         # TODO - issue notification? log an issue on GitHub?
 
-    if success == False and pool_not_supported == False:
+    if success is False and pool_not_supported is False:
         # There is a legitimate error...
         if pool_class is None:
             logger.error("No Pool support found for Pool/Model/Algo {}/{}/{}".format(pool, miner.model.model, algo))

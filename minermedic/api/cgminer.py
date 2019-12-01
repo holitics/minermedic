@@ -51,7 +51,7 @@ def get_summary(ip):
         dict
     """
 
-    # works with AntMiner and Baikal Miners
+    # works with most CGMiner Miners
     cgminer = CgminerAPI(host=ip)
     output = cgminer.summary()
     output.update({"IP": ip})
@@ -153,6 +153,37 @@ def restart_claymore_miner(ip):
     output.update({"IP": ip})
     return dict(output)
 
+
+def get_cgminer_stats(ip):
+
+    """
+    Retrieves statistics from a Miner using generic CGMiner API and Port
+
+    Returns:
+        dict
+    """
+
+    port = flask_app.config.get("MINER_API_PORTS_CGMINER_PORT");
+    cgminer = CgminerAPI(host=ip, port=port,payload_command="command")
+    output = cgminer.stats()
+    output.update({"IP": ip})
+    return dict(output)
+
+
+def get_cgminer_devs(ip):
+
+    """
+    Retrieves boards statistics for Miners using generic CGMiner API and Port
+
+    Returns:
+        dict
+    """
+
+    port = flask_app.config.get("MINER_API_PORTS_CGMINER_PORT");
+    cgminer = CgminerAPI(host=ip,port=port,payload_command="command")
+    output = cgminer.devs()
+    output.update({"IP": ip})
+    return dict(output)
 
 def get_antminer_stats(ip):
 

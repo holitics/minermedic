@@ -38,6 +38,7 @@ antminer_port: 4028
 claymore_port: 3333
 baikal_port: 4028
 avalon_port: 4028
+cgminer_port: 4028
 
 [DEVICE_INITIAL_THRESHOLDS]
 temp_warning: 82

@@ -154,7 +154,7 @@ class MPOS(BasePool):
 
         return url
 
-    def get_pool_stats(self, results, miner, worker, algo, pool_id):
+    def get_pool_stats(self, results, miner, worker, algo, pool_id, pool_url):
 
         # initialize with a 0 hashrate
         hashrate = 0.0

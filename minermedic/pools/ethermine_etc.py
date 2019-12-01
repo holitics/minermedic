@@ -13,6 +13,7 @@ from minermedic.pools.ethermine import EtherminePool
 
 """
 
+
 class EthermineETCPool(EtherminePool):
 
     # PER WORKER

@@ -1,15 +1,13 @@
 # asic_antminer.py, Copyright (c) 2019, Nicholas Saparoff <nick.saparoff@gmail.com>: Original implementation
 
 from minermedic.miners.base_miner import BaseMiner
-from minermedic.miners.helper import parse_worker_string, get_normalized_gigahash_per_sec_from_hashrate
+from minermedic.miners.helper import get_normalized_gigahash_per_sec_from_hashrate
 from minermedic.miner_results import MinerChipStats
 from minermedic.api import cgminer
-from minermedic.pools.helper import get_algo
 
 from phenome_core.util import math_functions
 from phenome_core.util.network import run_command_over_ssh
 from phenome_core.core.base.logger import root_logger as logger
-from phenome_core.util.time_functions import get_total_minutes_seconds_from_clock_time
 
 """
 
@@ -19,6 +17,7 @@ This inherits from BaseMiner and provides vendor specific
 implementation to retrieve data from Antminer Miners.
 
 """
+
 
 class ASIC_ANTMINER(BaseMiner):
 
@@ -39,15 +38,14 @@ class ASIC_ANTMINER(BaseMiner):
         # if we can SSH in there, it's a simple "reboot" command
         success = run_command_over_ssh(self,'reboot')
 
-        if success == False and try_using_defaults:
+        if success is False and try_using_defaults:
             # try one more time with alt creds
             self.username = "root"
             self.password = "admin"
             success = run_command_over_ssh(self,'reboot')
-            if success == False:
+            if success is False:
                 # just reset the password so we won't keep trying the defaults
                 self.password = ""
-
 
         return success
 
@@ -72,37 +70,9 @@ class ASIC_ANTMINER(BaseMiner):
         else:
 
             # WORKER, POOL, ALGO, LAST SHARE TIME
-            miner_pools = cgminer.get_pools(miner.ip)
 
-            for miner_pool in miner_pools['POOLS']:
-                miner_pool_status = miner_pool.get('Status')
-                miner_pool_stratum_active = miner_pool.get('Stratum_Active')
-
-                if (miner_pool_status is not None and miner_pool_status == "Alive") or (miner_pool_stratum_active is not None and miner_pool_stratum_active == True):
-                    # pull pertinent information
-                    worker = miner_pool['User']
-                    # get the PORT as well, different pools/algos at different ports
-                    pool = miner_pool['URL'].split("//",1)[-1]
-                    algo = get_algo(pool)
-                    last_share_time = miner_pool.get('Last Share Time')
-                    break
-
-            if (algo is None):
-                algo = miner.hashrate[0]['algo']
-
-            # IDLE STATE
-            if last_share_time is not None:
-                # convert last share time to minutes (i.e. share cycles) and then compare and set if needed
-                last_share_minutes, last_share_seconds = get_total_minutes_seconds_from_clock_time(last_share_time)
-                if last_share_minutes >= 1:
-                    logger.debug("process_antminer() - miner=" + str(miner.id) + " - Miner is IDLE.")
-                    miner.idle_cycles_count = last_share_minutes
-                elif miner.idle_cycles_count>1:
-                    # reset it
-                    miner.idle_cycles_count = 0
-
-            # get the coin address and worker
-            coin_address, worker = parse_worker_string(miner, worker)
+            # retrieve and process the pool stats on the Miner
+            miner.poll_pool_stats()
 
             # CHIPS, FANS, TEMPS
 
@@ -223,7 +193,7 @@ class ASIC_ANTMINER(BaseMiner):
             elapsed_secs = miner_stats['STATS'][1]['Elapsed']
 
             # Populate results
-            results.populate_miner_results(miner, elapsed_secs, worker, algo, pool, chip_stats,
+            results.populate_miner_results(miner, elapsed_secs, miner.worker, miner.algo, miner.pool, chip_stats,
                                            temps_chips, fan_speeds, hashrate_ghs, hw_error_rate)
 
         return elapsed_secs

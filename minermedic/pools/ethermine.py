@@ -80,7 +80,7 @@ class EtherminePool(BasePool):
 
         return api.get_json()
 
-    def get_pool_stats(self, results, miner, worker, algo, pool_id):
+    def get_pool_stats(self, results, miner, worker, algo, pool_id, pool_url):
 
         if algo == 'ethash':
             algo_idx = get_algo_index('daggerhashimoto')

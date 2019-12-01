@@ -169,5 +169,24 @@ class TestMiningPools(BaseTest):
         self.assertEqual(hashrate, 188888888.8888889)
         self.assertEqual(profitability, 0.37976668267087954)
 
+    def test_005_f2pool(self):
+
+        watts = 800
+        sim_urls = ["(.*)(.f2pool.com)(.*)","(min-api.cryptocompare.com)"]
+        sim_file = "f2pool.py"
+        coin_address = 'holitics'
+        worker = "001"
+        algo_in = "scrypt"
+        algo_out = "scrypt"
+        pool = "ltc-us.f2pool.com:8888"
+
+        algo_id, hashrate, profitability = \
+            self._test_mining_pool(watts, coin_address, worker, algo_in, algo_out, pool, sim_urls, sim_file, None)
+
+        # now do the tests
+        self.assertEqual(algo_id, 0)
+        self.assertEqual(hashrate, 0.272014595)
+        self.assertEqual(profitability, 0.7613440161264865)
+
 
 

@@ -6,6 +6,11 @@ from phenome_core.util import time_functions
 from phenome_core.core.helpers import config_helpers
 from phenome_core.core.base.logger import root_logger as logger
 from abc import abstractmethod
+from minermedic.miners.helper import parse_worker_string
+from minermedic.api import cgminer
+from minermedic.pools.helper import get_algo
+from phenome_core.util.time_functions import get_total_minutes_seconds_from_clock_time, \
+    get_total_minutes_seconds_from_timestamp
 
 
 """
@@ -37,6 +42,64 @@ class BaseMiner(PoweredObject, BaseAction):
         """
 
         pass
+
+    def poll_pool_stats(miner):
+
+        """
+        Pool Stats are retrieved from the Miner. Generic, shared call.
+        """
+
+        last_share_time = 0
+        miner.algo = None
+
+        # WORKER, POOL, ALGO, LAST SHARE TIME
+        miner_pools = cgminer.get_pools(miner.ip)
+
+        for miner_pool in miner_pools['POOLS']:
+            miner_pool_status = miner_pool.get('Status')
+            miner_pool_stratum_active = miner_pool.get('Stratum_Active')
+
+            if (miner_pool_status is not None and miner_pool_status == "Alive") or (
+                    miner_pool_stratum_active is not None and miner_pool_stratum_active == True):
+                # pull pertinent information
+                worker = miner_pool['User']
+                # get the PORT as well, different pools/algos at different ports
+                miner.pool = miner_pool['URL'].split("//", 1)[-1]
+                miner.algo = get_algo(miner.pool)
+                last_share_time = miner_pool.get('Last Share Time')
+                break
+
+        if miner.algo is None:
+            miner.algo = miner.hashrate[0]['algo']
+
+        # IDLE STATE
+        if last_share_time is not None:
+
+            # convert last share time to minutes (i.e. share cycles) and then compare and set if needed
+            if isinstance(last_share_time, int):
+                last_share_minutes, last_share_seconds = get_total_minutes_seconds_from_timestamp(last_share_time)
+            else:
+                last_share_minutes, last_share_seconds = get_total_minutes_seconds_from_clock_time(last_share_time)
+
+            if last_share_minutes >= 1:
+
+                if miner.last_share_time is not None and miner.last_share_time > 0:
+                    last_share_delta = last_share_minutes - miner.last_share_time
+                else:
+                    last_share_delta = 0
+
+                # set the last share time
+                miner.last_share_time = last_share_minutes
+
+                if last_share_delta >=2:
+                    logger.debug("process_miner() - miner=" + str(miner.id) + " - Miner is IDLE.")
+                    miner.idle_cycles_count = last_share_delta
+                elif miner.idle_cycles_count > 1:
+                    # reset it
+                    miner.idle_cycles_count = 0
+
+        # get the coin address and worker
+        miner.coin_address, miner.worker = parse_worker_string(miner, worker)
 
     def restart_miner(self):
 
