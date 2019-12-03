@@ -125,15 +125,8 @@ def get_hashrate_info(results, miner, algo):
 
     """
 
-    # Hack for some miners/pools
-    if algo == "daggerhashimoto":
-        algo = "ethash"
-
-    # prepare the hashrate_model_key
-    hashrate_model_key = (miner.model.model + "." + algo.replace("-", "")).lower()
-
     # do the lookup
-    hashrate_info = results.hash_rate_per_model.get(hashrate_model_key)
+    hashrate_info = results.get_hashrate_info(miner, algo)
 
     if hashrate_info is None:
         logger.warning("Model/Algo combination does not exist for "

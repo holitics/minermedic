@@ -110,6 +110,7 @@ class F2Pool(BasePool):
                 if worker_record[0] == worker:
                     # current hashrate per worker
                     hashrate = float(worker_record[1])
+                    break
 
         # get the algo
         algo_idx = get_algo_index(algo)

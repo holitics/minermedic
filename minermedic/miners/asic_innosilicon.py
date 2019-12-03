@@ -89,25 +89,32 @@ class ASIC_INNOSILICON(BaseMiner):
 
             # what are the hashrate units of this miner?
             hashrate_units = miner.hashrate[0]['units'].upper()
-            hashrate = None
+            hashrate_pool = None
 
             summary = cgminer.get_summary(miner.ip)['SUMMARY'][0]
 
             try:
                 # Get the current hashrate
-                hashrate = float(str(summary['GHS 5s']))
+                hashrate_pool = float(str(summary['GHS 5s']))
             except:
                 pass
 
-            if hashrate is None:
+            if hashrate_pool is None:
                 # try for older MHS
                 try:
-                    hashrate = float(str(summary['MHS 5s']))
+                    hashrate_pool = float(str(summary['MHS 5s']))
                 except:
                     pass
 
             # now, convert to GH/s which is what the normalized result handling requires
-            hashrate_ghs = get_normalized_gigahash_per_sec_from_hashrate(hashrate, hashrate_units)
+            hashrate_pool_ghs = get_normalized_gigahash_per_sec_from_hashrate(hashrate_pool, hashrate_units)
+
+            # get the total possible hashrate by multiplying base board hashrate
+            # by number of boards being reported by the miner controller
+            hashrate_miner = int(miner.hashrate[0]['rate'] * boards)
+
+            # set the override total hashrate for this miner
+            results.set_miner_hashrate_override(miner, hashrate_miner)
 
             try:
                 hw_error_rate = math_functions.get_formatted_float_rate(summary['Device Hardware%'], 4)
@@ -119,7 +126,7 @@ class ASIC_INNOSILICON(BaseMiner):
 
             # Populate results
             results.populate_miner_results(miner, elapsed_secs, miner.worker, miner.algo, miner.pool, chip_stats,
-                                           temps_chips, fan_speeds, hashrate_ghs, hw_error_rate)
+                                           temps_chips, fan_speeds, hashrate_pool_ghs, hw_error_rate)
 
         return elapsed_secs
 

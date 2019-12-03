@@ -148,7 +148,7 @@ def restart_claymore_miner(ip):
     """
 
     port = flask_app.config.get("MINER_API_PORTS_CLAYMORE_PORT");
-    cgminer = CgminerAPI(host=ip,port=port,payload_command="method")
+    cgminer = CgminerAPI(host=ip,port=port, payload_command="method")
     output = cgminer.miner_restart()
     output.update({"IP": ip})
     return dict(output)
@@ -164,7 +164,7 @@ def get_cgminer_stats(ip):
     """
 
     port = flask_app.config.get("MINER_API_PORTS_CGMINER_PORT");
-    cgminer = CgminerAPI(host=ip, port=port,payload_command="command")
+    cgminer = CgminerAPI(host=ip, port=port, payload_command="command")
     output = cgminer.stats()
     output.update({"IP": ip})
     return dict(output)
@@ -180,7 +180,7 @@ def get_cgminer_devs(ip):
     """
 
     port = flask_app.config.get("MINER_API_PORTS_CGMINER_PORT");
-    cgminer = CgminerAPI(host=ip,port=port,payload_command="command")
+    cgminer = CgminerAPI(host=ip,port=port, payload_command="command")
     output = cgminer.devs()
     output.update({"IP": ip})
     return dict(output)

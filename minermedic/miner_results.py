@@ -62,6 +62,7 @@ class MinerResults(BaseResults):
 
     def __init_hashrate_table(self):
 
+        self.hash_rate_overrides = {}
         self.hash_rate_per_model = {}
 
         model_values = api.get_default_propertyvalues_by_classtype_and_property('CRYPTO_MINER', 'hashrate')
@@ -93,6 +94,9 @@ class MinerResults(BaseResults):
     def get_new_object_state(self):
         return MinerState()
 
+    def set_miner_hashrate_override(self, miner, hashrate):
+        self.hash_rate_overrides[miner.id] = hashrate
+
     def get_hashrate_info(self, miner, algo):
 
         """
@@ -102,8 +106,23 @@ class MinerResults(BaseResults):
         :return: Dict of information for that Algo for that particular Miner
         """
 
+        # Hack for some miners/pools
+        if algo == "daggerhashimoto":
+            algo = "ethash"
+
+        # build the hashrate per model key
         key = miner.model.model + "." + algo.replace("-", "")
-        return self.hash_rate_per_model.get(key.lower())
+
+        # get the hashrate info for this model of miner
+        hashrate_info = self.hash_rate_per_model.get(key.lower())
+
+        if hashrate_info is not None:
+            # are there any overrides set? If so, use those
+            hashrate_override = self.hash_rate_overrides.get(miner.id)
+            if hashrate_override is not None:
+                hashrate_info['expected_rate'] = hashrate_override
+
+        return hashrate_info
 
     def copy_result_data(self,results):
 
