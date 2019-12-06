@@ -107,10 +107,17 @@
     		{	"id": "_UNIT_TYPES_",
           		"description": "Unit Types for MinerMedic devices and properties",
 				"values": [
-					{ "key": "kilohash_per_sec", "value": "10001", "attributes": [{ "description": "KiloHashes Per Second", "numeric":"True", "symbol":"KH/s"}] },
-					{ "key": "megahash_per_sec", "value": "10002", "attributes": [{ "description": "MegaHashes Per Second", "numeric":"True", "symbol":"MH/s"}] },
-					{ "key": "gigahash_per_sec", "value": "10003", "attributes": [{ "description": "GigaHashes Per Second", "numeric":"True", "symbol":"GH/s"}] },
-					{ "key": "terahash_per_sec", "value": "10004", "attributes": [{ "description": "TeraHashes Per Second", "numeric":"True", "symbol":"TH/s"}] }
+					{ "key": "hash_per_sec", "value": "10001", "attributes": [{ "description": "Hashes Per Second", "numeric":"True", "symbol":"H/s"}] },
+					{ "key": "kilohash_per_sec", "value": "10002", "attributes": [{ "description": "KiloHashes Per Second", "numeric":"True", "symbol":"KH/s"}] },
+					{ "key": "megahash_per_sec", "value": "10003", "attributes": [{ "description": "MegaHashes Per Second", "numeric":"True", "symbol":"MH/s"}] },
+					{ "key": "gigahash_per_sec", "value": "10004", "attributes": [{ "description": "GigaHashes Per Second", "numeric":"True", "symbol":"GH/s"}] },
+					{ "key": "terahash_per_sec", "value": "10005", "attributes": [{ "description": "TeraHashes Per Second", "numeric":"True", "symbol":"TH/s"}] },
+					{ "key": "petahash_per_sec", "value": "10006", "attributes": [{ "description": "PetaHashes Per Second", "numeric":"True", "symbol":"PH/s"}] },
+					{ "key": "exahash_per_sec",  "value": "10007", "attributes": [{ "description": "ExaHashes Per Second",  "numeric":"True", "symbol":"EH/s"}] },
+					{ "key": "zettahash_per_sec", "value": "10008", "attributes": [{ "description": "ZettaHashes Per Second", "numeric":"True", "symbol":"ZH/s"}] },
+					{ "key": "yottahash_per_sec", "value": "10009", "attributes": [{ "description": "YottaHashes Per Second", "numeric":"True", "symbol":"YH/s"}] },
+					{ "key": "sol_per_sec", "value": "10010", "attributes": [{ "description": "Sols Per Second", "numeric":"True", "symbol":"Sol/s"}] },
+					{ "key": "kilosol_per_sec", "value": "10011", "attributes": [{ "description": "KiloSols Per Second", "numeric":"True", "symbol":"KSol/s"}] }
 				]
        		}
     	]
@@ -346,7 +353,7 @@
 							{
 								"algo": "AUTO",
 								"data_model": [{"data_in": "temperature,fan_status,chip_status,hashrate", "data_out": "temperature"}],
-								"period_minutes": [{"steps_in": 6, "steps_out": 1}],
+								"period_minutes": [{"steps_in": 4, "steps_out": 1}],
 								"seasonality": [{"include_time": "true", "include_date": "false"}]
 							}
 						]

@@ -14,6 +14,9 @@ Contains a number of functions to help with parsing results, hashrates, power, e
 
 """
 
+UNIT_MULTIPLIERS = {'Y': 1000000000000000, 'Z': 1000000000000, 'E': 1000000000, 'P': 1000000, 'T': 1000, 'G': 1,
+                    'M': 0.001, 'K': 0.000001, '-': 0.000000001}
+
 
 def parse_worker_string(miner, worker):
 
@@ -51,6 +54,23 @@ def parse_worker_string(miner, worker):
     return coin_address, worker
 
 
+def __get_size_unit(unit):
+
+    if unit is None:
+        return None
+
+    convert_unit = unit.upper()
+    if convert_unit[-2:] != "/S":
+        convert_unit = convert_unit + "/S"
+
+    # remove H/S and SOLS/S (the only two units of work I know of in crypto)
+    size_unit = convert_unit.replace("H/S","")
+    size_unit = size_unit.replace("SOLS/S","")
+    if size_unit == '':
+        size_unit = "-"
+
+    return size_unit
+
 def get_normalized_gigahash_per_sec_from_hashrate(value, unit):
 
     """
@@ -61,25 +81,8 @@ def get_normalized_gigahash_per_sec_from_hashrate(value, unit):
 
     """
 
-    if unit is None:
-        return None
-
-    convert_unit = unit.upper()
-    if convert_unit[2:] != "/S":
-        convert_unit = convert_unit + "/S"
-
     # convert to GH/s
-    if value is not None:
-        if convert_unit == 'GH/S':
-            pass
-        elif convert_unit == 'TH/S':
-            value = value * 1000
-        elif convert_unit == 'MH/S':
-            value = value / 1000
-        elif convert_unit == 'KH/S':
-            value = value / 1000000
-        elif convert_unit == 'H/S':
-            value = value / 1000000000
+    value = value * UNIT_MULTIPLIERS[__get_size_unit(unit)]
 
     return value
 
@@ -90,29 +93,17 @@ def get_normalized_hashrate_from_gigahash_per_sec(value, unit):
     Normalizes hashrate from GH/s to any other units.
 
     Returns:
-        Float
+        Float, String
     """
 
-    # clean up units for comparison
-    try:
-        units_clean = unit[:2].lower()
-    except:
-        units_clean = ""
+    # convert FROM GH/s
+    value = value / UNIT_MULTIPLIERS[__get_size_unit(unit)]
 
-    if units_clean == 'gh':
-        return value, unit
-    elif units_clean == "mh":
-        return float(value*1000), "MH/s"
-    elif units_clean == "th":
-        return float(value/1000), "TH/s"
-    elif units_clean == "kh":
-        return float(value*1000*1000), "KH/s"
-    elif units_clean == "h/" or units_clean == "h":
-        return float(value * 1000 * 1000 * 1000), "H/s"
-    else:
-        logger.error("Unsupported unit: {}".format(unit))
-        # TODO - throw not supported exception
-        return None
+    # nicely format those units!
+    units_clean = unit.replace("/S","/s")
+
+    # return both
+    return value, units_clean
 
 
 def get_hashrate_info(results, miner, algo):
@@ -133,31 +124,6 @@ def get_hashrate_info(results, miner, algo):
                        "miner model '{}' and algo '{}'".format(miner.model.model, algo))
 
     return hashrate_info
-
-
-def get_simplified_hashrate(value, unit):
-
-    """
-    Update from one unit to the next if the value is greater than 1000.
-    e.g. get_simplified_hashrate(1000, "GH/s") => (1, "TH/s")
-
-    Returns:
-        Integer, String
-
-    """
-
-    while value > 1000:
-        value = value / 1000.0
-        if unit == 'MH/s':
-            unit = 'GH/s'
-        elif unit == 'GH/s':
-            unit = 'TH/s'
-        elif unit == 'KH/s':
-            unit = 'MH/s'
-        else:
-            assert False, "Unsupported unit: {}".format(unit)
-
-    return value, unit
 
 
 def get_converted_hashrate(original_value, original_units, new_units):
