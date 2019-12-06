@@ -12,13 +12,19 @@ MinerMedic is a **Flask Application**. It has a REST API and a simple embedded U
 
 Please note, these instructions assume you have a minimum of [Python 3.6](https://www.python.org/downloads/) and [git](https://git-scm.com/downloads) installed. **Do not use Python 3.8+** as some of the dependencies like TensorFlow, Keras, SQLAlchemy may not work correctly due to deprecation (WIP).
 
-First clone the source:
+First, setup your machine with the required development libs:
+
+```
+sudo apt-get update
+sudo apt-get install build-essential libssl-dev libffi-dev python3-dev python3-venv
+```
+
+Next, clone the source:
 ```
 $ git clone https://github.com/holitics/minermedic
 ```
 
 then change into the directory:
-
 ```
 $ cd minermedic
 ```
@@ -30,13 +36,21 @@ $ cp minermedic/minermedic.ini.dist ./minermedic.ini
 
 If you would like, you should edit this file and put in your Mail Server information, etc. It is pretty self-explanatory. Detailed documentation on the INI file forthcoming.
 
-## Install the dependencies
+## Install dependencies
+
+First setup a virtual environment for Python3. This will make your life easier, keep things clean on your machine, and keep everything local in the current directory.
+```
+python3 -m venv .
+source bin/activate
+pip3 install --upgrade pip
+```
 
 The Phenome core will be needed:
 ```
 $ pip install phenome-core --extra-index-url https://api.packagr.app/AvVcpYfO2/
 ```
-then clone the extensions directly into the minermedic source directory:
+
+Once the core is installed - clone the extensions directly into the minermedic source directory:
 ```
 $ git clone https://github.com/holitics/phenome-extensions phenome
 ```
