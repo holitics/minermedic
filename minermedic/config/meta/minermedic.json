@@ -581,6 +581,19 @@
 		}
       },
       {
+        "id": "ASIC_AntMiner_Z11",
+        "description": "Bitmain AntMiner Z11 ZCash Miner 135KSol/s",
+        "model_classtype": "CRYPTO_MINER",
+        "model_classname": "minermedic.miners.asic_antminer.ASIC_ANTMINER",
+        "model_subclasstype": "ASIC_MINER",
+		"properties": {
+			"property": [
+				{ "name": "chips", "value": "3,3,3" },
+				{ "name": "hashrate", "value": [{ "algo": "equihash", "coin": "zcash", "rate": 135, "units": "KSols/s", "power": 1729 }]}
+			]
+		}
+      },
+      {
         "id": "GPU_Claymore",
         "description": "Claymore EtherMiner Multi-GPU",
         "model_classtype": "CRYPTO_MINER",

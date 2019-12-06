@@ -291,3 +291,20 @@ class TestMiners(BaseTest):
         self.assertEqual(miner_chips['total'], 80)
         self.assertEqual(str(uptime), '2:07:05')
 
+    def test_013_miner_ANTMINER_Z11(self):
+
+        from minermedic.miners.asic_antminer import ASIC_ANTMINER
+
+        model_id = "ASIC_AntMiner_Z11"
+        sim_file = "antminer_z11.py"
+
+        fan_speeds, temperature, hw_error_rates, miner_chips, uptime = \
+            self._test_miner(model_id, ASIC_ANTMINER, None, sim_file)
+
+        # now do the tests
+        self.assertEqual(fan_speeds, 3960)
+        self.assertEqual(temperature, 60)
+        self.assertEqual(hw_error_rates, '0.0')
+        self.assertEqual(miner_chips['total'], 9)
+        self.assertEqual(str(uptime), '4 days, 16:35:02')
+
