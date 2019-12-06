@@ -1,6 +1,7 @@
 recursive-include phenome *
 recursive-include minermedic *
 
+recursive-exclude phenome/.git
 recursive-exclude phenome/data *
 recursive-exclude phenome/logs *
 recursive-exclude phenome_core *
