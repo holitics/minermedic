@@ -3,6 +3,7 @@
 from phenome_core.core.base.logger import root_logger as logger
 from phenome_core.util.power import get_kilowatt_minute_cost
 from phenome_core.core.globals import datamodel_maps
+from phenome_core.core.helpers.model_helpers import get_units_id_by_symbol
 
 datamodel_hashrate_units = None
 
@@ -218,8 +219,11 @@ def calculate_hashrates(results, miner, hashrate_ghs5s, algo):
         datamodel_hashrate, calculated_units = \
             get_normalized_hashrate_from_gigahash_per_sec(hashrate_ghs5s, get_normalized_global_hashrate())
 
+        units_id = get_units_id_by_symbol(calculated_units)
+
         # set the normalized result
         results.set_result(miner, 'hashrate', datamodel_hashrate)
+        results.set_result(miner, 'hashrate_units', units_id)
 
     except:
         pass

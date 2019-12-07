@@ -18,12 +18,12 @@ class ChipCheck(BaseAction):
 
     def execute(self):
 
-        chips_stats = self.results.get_result(self.object.id, 'miner_chips')['status']
+        chips_stats = self.results.get_result(self.object.id, 'miner_chips')['detail']
         object_states = self.results.object_states[self.object.id]
 
-        chips_working = chips_stats['Os']
-        chips_defective = chips_stats['Xs']
-        chips_missing = chips_stats['-']
+        chips_working = chips_stats['active']
+        chips_defective = chips_stats['failed']
+        chips_missing = chips_stats['missing']
 
         chips_not_working = chips_defective + chips_missing
         chips_total = chips_working + chips_not_working

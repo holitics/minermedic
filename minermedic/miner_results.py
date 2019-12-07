@@ -142,9 +142,9 @@ class MinerResults(BaseResults):
         """
 
         # build a status dict
-        chip_status =  {'Os': chips.chips_working,
-                        'Xs': chips.chips_defective,
-                        '-': chips.chips_missing}
+        chip_status =  {'active': chips.chips_working,
+                        'failed': chips.chips_defective,
+                        'missing': chips.chips_missing}
 
         # get some working totals
         chips_bad = chips.chips_defective+chips.chips_missing
@@ -152,21 +152,20 @@ class MinerResults(BaseResults):
         chip_status_percent = (chips.chips_working / chips_total) * 100.0
 
         # set a result of chip status as a percent
-        self.set_result(miner, 'chip_status', chip_status_percent)
+        self.set_result(miner, 'miner_chips_status', chip_status_percent)
 
         # set the actual chip summary stats as a dict
-        self.set_result(miner, 'miner_chips', {'status': chip_status,
+        self.set_result(miner, 'miner_chips', {'detail': chip_status,
                                                'total': chips.chips_total,
                                                'active': chips.chips_working})
 
         # add a direct lookup summary string
 
-        if chips_bad == 0:
-            chip_summary = str(chips.chips_working)
-        else:
-            chip_summary = str(chips.chips_working) + "." + str(chips_bad)
-
-        self.set_result(miner, 'miner_chips_summary', {'summary': chip_summary})
+        #if chips_bad == 0:
+        #    chip_summary = str(chips.chips_working)
+        #else:
+        #    chip_summary = str(chips.chips_working) + "." + str(chips_bad)
+        # self.set_result(miner, 'miner_chips_summary', {'summary': chip_summary})
 
     def populate_fan_results(self, miner, fan_speeds):
 

@@ -18,9 +18,9 @@ class GPUCheck(BaseAction):
     def execute(self):
 
         object_states = self.results.object_states[self.object.id]
-        gpu_stats = self.results.get_result(self.object.id, 'miner_chips')['status']
-        gpus_missing = gpu_stats['-']
-        gpus_total = gpu_stats['Os'] + gpu_stats['Xs'] + gpus_missing
+        gpu_stats = self.results.get_result(self.object.id, 'miner_chips')['detail']
+        gpus_missing = gpu_stats['missing']
+        gpus_total = gpu_stats['active'] + gpu_stats['failed'] + gpus_missing
 
         if gpus_missing > 0:
             self.error_message = "{} GPUs are not hashing".format(gpus_missing)
