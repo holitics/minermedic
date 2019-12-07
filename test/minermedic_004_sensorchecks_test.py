@@ -18,8 +18,6 @@ sys._unit_tests_load_app_data = True
 sys._unit_tests_load_app_meta_data = True
 sys._unit_tests_app_name = "minermedic"
 
-CONST_API_PORT = 5000
-
 
 class TestSensorChecks(BaseTest):
 

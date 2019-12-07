@@ -4,7 +4,7 @@ import os, sys, pytest, unittest, logging, configparser
 from phenome.test import BaseTest
 
 CONST_APP_NAME = 'minermedic'
-CONST_API_PORT = 6001
+CONST_API_PORT = 6000
 
 
 class TestMinerDumper(BaseTest):

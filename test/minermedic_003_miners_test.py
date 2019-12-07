@@ -16,6 +16,7 @@ sys._unit_tests_app_name = "minermedic"
 
 CONST_API_PORT = 5000
 
+
 class TestMiners(BaseTest):
 
     def setUp(self):
