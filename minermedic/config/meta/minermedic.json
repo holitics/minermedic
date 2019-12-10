@@ -314,7 +314,7 @@
 						"attributes": [
 							{
 								"algo": "AUTO",
-								"data_model": [{"data_in": "profitability,hashrate,algo,pool,power_used,coin_cost", "data_out": "profitability"}],
+								"data_model": [{"data_in": "AUTO", "data_out": "profitability"}],
 								"period_minutes": [{"steps_in": 15, "steps_out": 3}],
 								"period_hours": [{"steps_in": 24, "steps_out": 3}],
 								"period_days": [{"steps_in": 7, "steps_out": 3}],
@@ -325,18 +325,6 @@
 					{
 						"name": "health",
 						"description": "predict future health score",
-						"attributes": [
-							{
-								"algo": "AUTO",
-								"data_model": [{"data_in": "health,temperature,fan_status,chip_status,hashrate", "data_out": "health"}],
-								"period_minutes": [{"steps_in": 6, "steps_out": 1}],
-								"seasonality": [{"include_time": "true", "include_date": "false"}]
-							}
-						]
-					},
-					{
-						"name": "health2",
-						"description": "predict future health score (based just on health)",
 						"attributes": [
 							{
 								"algo": "AUTO",
@@ -352,7 +340,7 @@
 						"attributes": [
 							{
 								"algo": "AUTO",
-								"data_model": [{"data_in": "temperature,fan_status,chip_status,hashrate", "data_out": "temperature"}],
+								"data_model": [{"data_in": "AUTO", "data_out": "temperature"}],
 								"period_minutes": [{"steps_in": 4, "steps_out": 1}],
 								"seasonality": [{"include_time": "true", "include_date": "false"}]
 							}
