@@ -27,6 +27,9 @@ Copyright (c) 2019 Nicholas Saparoff, Phenome Project
 	<!-- Form Validation -->
     <link rel="stylesheet" media="all" href="static/lib/css/holitics-form-validation-1.0.css"/>
     
+    <!-- chart styles -->
+	<link rel="stylesheet" media="all" href="static/lib/css/holitics-diffchart-1.0.css?v=1.0"/>
+    
 	{% endblock %}
 	
   </head>
@@ -170,8 +173,9 @@ Copyright (c) 2019 Nicholas Saparoff, Phenome Project
     
     {% block body_footer_javascript %}{% endblock %}
 
-	<!-- finally, include the modal dialog for confirmations, etc. -->
+	<!-- finally, include the modal dialog for confirmations, modal chart, etc. -->
 	{% include "holitics-modal-dialog.html" %}
+	{% include "holitics-modal-chart.html" %}
 
   </body>
 </html>

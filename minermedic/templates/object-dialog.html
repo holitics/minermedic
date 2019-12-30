@@ -29,6 +29,7 @@
 				</h4>
 
 				<h5>
+				
 				{%- if object_ip != None and object_name != object_ip %}
 					<small>IP-ADDRESS: {{object_ip}}</small><br/>
 				{%- endif %}
@@ -42,7 +43,6 @@
 			</div>
 		</div>
 	</div>
-	
 	
 	{%- if show_details == 1 
 		and object_health != None
@@ -79,6 +79,8 @@
 	{%- if header_only == 0 %}
 	
 	<script src="static/lib/js/holitics-modal-dialog.js"></script>
+	<script src="static/lib/js/holitics-modal-chart.js"></script>
+	<script src="static/lib/js/holitics-object-dialog-predictions.js"></script>
 	<script src="static/lib/js/holitics-object-dialog.js"></script>
 	<script src="static/lib/js/holitics-object-dialog-relations.js"></script>
 	<script src="static/lib/js/holitics-object-dialog-actions.js"></script>

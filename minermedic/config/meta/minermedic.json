@@ -328,7 +328,7 @@
 						"attributes": [
 							{
 								"algo": "AUTO",
-								"data_model": [{"data_in": "health", "data_out": "health"}],
+								"data_model": [{"range": "0-10", "data_in": "health", "data_out": "health"}],
 								"period_minutes": [{"steps_in": 4, "steps_out": 1}],
 								"seasonality": [{"include_time": "true", "include_date": "false"}]
 							}
@@ -340,8 +340,8 @@
 						"attributes": [
 							{
 								"algo": "AUTO",
-								"data_model": [{"data_in": "AUTO", "data_out": "temperature"}],
-								"period_minutes": [{"steps_in": 4, "steps_out": 1}],
+								"data_model": [{"range": "0-120", "data_in": "temperature", "data_out": "temperature"}],
+								"period_minutes": [{"steps_in": 6, "steps_out": 1}],
 								"seasonality": [{"include_time": "true", "include_date": "false"}]
 							}
 						]
