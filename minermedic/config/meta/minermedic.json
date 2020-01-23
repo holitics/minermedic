@@ -315,9 +315,9 @@
 							{
 								"algo": "AUTO",
 								"data_model": [{"data_in": "AUTO", "data_out": "profitability"}],
-								"period_minutes": [{"steps_in": 15, "steps_out": 3}],
-								"period_hours": [{"steps_in": 24, "steps_out": 3}],
-								"period_days": [{"steps_in": 7, "steps_out": 3}],
+								"period_minutes": [{"steps_in": 10, "steps_out": 2}],
+								"period_hours": [{"steps_in": 24, "steps_out": 2}],
+								"period_days": [{"steps_in": 7, "steps_out": 2}],
 								"seasonality": [{"include_time": "true", "include_date": "false"}]
 							}
 						]

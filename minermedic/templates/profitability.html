@@ -14,9 +14,6 @@ Copyright (c) 2019 Nicholas Saparoff, Phenome Project
 	<link rel="stylesheet" media="all" href="static/lib/css/holitics-barchart-1.0.css?v=1.0"/>
 	<link rel="stylesheet" media="all" href="static/lib/css/holitics-effects-1.0.css?v=1.0"/>
 
-	<script src="https://d3js.org/d3.v4.min.js"></script>
-	<script src="static/lib/js/d3tip-v4.js"></script>
-
 {% endblock %}
 
 {% block carousel_indicator_4 %}active{% endblock %} 
@@ -34,6 +31,10 @@ Copyright (c) 2019 Nicholas Saparoff, Phenome Project
 	<script src="static/lib/js/holitics-api-common.js" ></script>
 	<script src="static/lib/js/holitics-barchart.js" ></script>
 	<script src="static/apps/minermedic/lib/js/profitability.js" ></script>
+
+	<!-- enabled for d3v4 only right now for special tooltips -->
+	<script src="static/lib/js/d3-4.13.0/d3.v4.min.js"></script> 
+	<script src="static/lib/js/d3tip-v4.js"></script>
 
 	<script>
 		build_plot_title();
